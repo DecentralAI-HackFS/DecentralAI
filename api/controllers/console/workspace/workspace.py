@@ -14,6 +14,7 @@ from extensions.ext_database import db
 from models.account import Tenant
 from services.account_service import TenantService
 from services.workspace_service import WorkspaceService
+from events.tenant_event import tenant_was_created
 
 provider_fields = {
     'provider_name': fields.String,
@@ -56,6 +57,24 @@ class TenantListApi(Resource):
                 tenant.current = True  # Set current=True for current tenant
         return {'workspaces': marshal(tenants, tenants_fields)}, 200
 
+    @setup_required
+    @login_required
+    @account_initialization_required
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str, required=True, location='json')
+        args = parser.parse_args()
+
+        tenant = TenantService.create_tenant(args['name'])
+        TenantService.create_tenant_member(tenant, current_user, role='owner')
+        tenant_was_created.send(tenant)
+
+        try:
+            TenantService.switch_tenant(current_user, tenant.id)
+        except Exception:
+            raise AccountNotLinkTenantError("Account not link tenant")
+
+        return {'result': 'success', 'tenant': marshal(tenant, tenants_fields)}, 201
 
 class TenantApi(Resource):
     @setup_required

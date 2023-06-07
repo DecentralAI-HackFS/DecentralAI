@@ -118,7 +118,7 @@ class Web3SetupApi(Resource):
 
             # login user
             session.clear()
-            flask_login.login_user(account, remember=True)
+            flask_login.login_user(account, remember=args['remember_me'])
             AccountService.update_last_login(account, request)
             return {'result': 'success'}
         else:

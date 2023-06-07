@@ -121,9 +121,9 @@ class Web3LoginApi(Resource):
                 account.initialized_at = datetime.utcnow()
                 db.session.commit()
 
-                # login user
+            # login user
             session.clear()
-            flask_login.login_user(account, remember=True)
+            flask_login.login_user(account, remember=args['remember_me'])
             AccountService.update_last_login(account, request)
             return {'result': 'success'}
         else:
