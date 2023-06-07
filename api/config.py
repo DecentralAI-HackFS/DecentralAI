@@ -47,7 +47,8 @@ DEFAULTS = {
     'PDF_PREVIEW': 'True',
     'LOG_LEVEL': 'INFO',
     'DISABLE_PROVIDER_CONFIG_VALIDATION': 'False',
-    'DEFAULT_LLM_PROVIDER': 'openai'
+    'DEFAULT_LLM_PROVIDER': 'openai',
+    'MORALIS_API_KEY': 'moralis_api_key',
 }
 
 
@@ -186,6 +187,8 @@ class Config:
         # For temp use only
         # set default LLM provider, default is 'openai', support `azure_openai`
         self.DEFAULT_LLM_PROVIDER = get_env('DEFAULT_LLM_PROVIDER')
+
+        self.MORALIS_API_KEY = get_env('MORALIS_API_KEY')
 
 class CloudEditionConfig(Config):
 

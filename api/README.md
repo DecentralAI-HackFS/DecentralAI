@@ -19,6 +19,10 @@
    ```bash
    openssl rand -base64 42
    ```
+3.1. Add `WEB3_STORAGE_API_KEY` to `.env` file
+
+3.2. Add `MORALIS_API_KEY` to `.env` file
+
 4. Install dependencies
    ```bash
    pip install -r requirements.txt
