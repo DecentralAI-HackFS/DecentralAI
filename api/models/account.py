@@ -55,7 +55,10 @@ class Account(UserMixin, db.Model):
 
     @property
     def current_tenant_id(self):
-        return self._current_tenant.id
+        if self._current_tenant.id:
+            return self._current_tenant.id
+        else:
+            return None
 
     @current_tenant_id.setter
     def current_tenant_id(self, value):
