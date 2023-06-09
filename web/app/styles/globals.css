@@ -139,6 +139,6 @@ button:focus-within {
   background-color: rgb(235 245 255);
 }
 
-[data-rk] {
+div[data-rk]:not([class]) {
   height: 100%;
 }

@@ -17,8 +17,9 @@ import {
   walletLogin,
 } from "@/service/common";
 import { apiPrefix } from "@/config";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ConnectButton, useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount, useNetwork, useSignMessage } from "wagmi";
+import Loading from "../components/base/loading";
 
 const validEmailReg = /^[\w\.-]+@([\w-]+\.)+[\w-]{2,}$/;
 
@@ -139,27 +140,19 @@ const NormalForm = () => {
       dispatch({ type: "google_login_failed", payload: null });
     if (google) window.location.href = google.redirect_url;
   }, [google, google]);
-  // const [walletMessage,setWalletMessage] = useState<string>()
+
+  const [isLoadingWalletLogin,setIsLoadingWalletLogin] = useState(false);
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const { signMessageAsync } = useSignMessage();
+  const { openConnectModal } = useConnectModal();
 
   const handleWalletLogin = async () => {
-    console.log("click");
-    Toast.notify({
-      type: "error",
-      message: "click",
-    });
     if (!isConnected) {
-      console.log("no connected");
-      Toast.notify({
-        type: "error",
-        message: t("no connected"),
-      });
+      openConnectModal?.()
       return;
     }
     if (!address) {
-      console.log("no address");
       Toast.notify({
         type: "error",
         message: t("no address"),
@@ -167,7 +160,6 @@ const NormalForm = () => {
       return;
     }
     if (!chain?.id) {
-      console.log("chainId");
       Toast.notify({
         type: "error",
         message: t("chainId"),
@@ -181,7 +173,8 @@ const NormalForm = () => {
     const signMessageRes = await signMessageAsync({
       message: requestLoginRes.message,
     });
-    const loginRes = await walletLogin({
+    setIsLoadingWalletLogin(true);
+    await walletLogin({
       url: "/web3/login",
       body: {
         message: requestLoginRes.message,
@@ -190,11 +183,10 @@ const NormalForm = () => {
       },
     });
     router.push("/");
-    console.log("requestLoginRes", requestLoginRes);
-    console.log("message", requestLoginRes.message);
-    console.log("signMessageRes", signMessageRes);
-    console.log("loginRes", loginRes);
   };
+
+  if (isLoadingWalletLogin)
+    return <Loading type='area' />
 
   return (
     <>
@@ -246,9 +238,14 @@ const NormalForm = () => {
 
           {IS_CE_EDITION && (
             <>
-              <ConnectButton />
-              <button onClick={handleWalletLogin}>Login</button>
-              <form className="space-y-6" onSubmit={() => {}}>
+              <button
+                type="button"
+                className="rounded-md bg-indigo-600 px-8 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleWalletLogin}
+              >
+                {isConnected ? 'Login': 'Connect Wallet'}
+              </button>
+              {/* <form className="space-y-6" onSubmit={() => {}}>
                 <div>
                   <label
                     htmlFor="email"
@@ -310,7 +307,7 @@ const NormalForm = () => {
                     {t("login.signBtn")}
                   </Button>
                 </div>
-              </form>
+              </form> */}
             </>
           )}
           {/*  agree to our Terms and Privacy Policy. */}
