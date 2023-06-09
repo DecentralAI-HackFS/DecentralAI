@@ -19,7 +19,7 @@ const WorkspaceNavItems = () => {
         type: "success",
         message: t("common.actionMsg.modifiedSuccessfully"),
       });
-      router.replace("/decentral-ai");
+      router.replace("/decentral-ai/apps");
     } catch (e) {
       notify({ type: "error", message: t("common.provider.saveFailed") });
     } finally {

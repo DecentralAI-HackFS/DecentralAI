@@ -3,6 +3,7 @@
 import { WorkspaceProvider } from "@/context/workspace-context";
 import NavItem from "./navItem";
 import WorkspaceNavItems from "./workspaceNavItems";
+import Link from "next/link";
 
 const Sidebar = () => {
   return (
@@ -56,25 +57,27 @@ const Sidebar = () => {
           <WorkspaceProvider>
             <WorkspaceNavItems />
           </WorkspaceProvider>
-          <NavItem>
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <path
-                d="M12 6.79999V12.8M12 12.8V18.8M12 12.8H18M12 12.8H6"
-                stroke="#4B5563"
-                stroke-width={2}
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </NavItem>
+          <Link href="/decentral-ai/dao/create">
+            <NavItem>
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <path
+                  d="M12 6.79999V12.8M12 12.8V18.8M12 12.8H18M12 12.8H6"
+                  stroke="#4B5563"
+                  stroke-width={2}
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </NavItem>
+          </Link>
         </div>
       </div>
     </aside>
