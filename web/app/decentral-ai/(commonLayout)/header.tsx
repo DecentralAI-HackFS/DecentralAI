@@ -1,5 +1,6 @@
 "use client";
-import { Navbar } from "flowbite-react";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Header = () => {
   return (
@@ -15,6 +16,9 @@ const Header = () => {
             DecentralAI
           </span>
         </a>
+        <div>
+          <ConnectButton />
+        </div>
       </div>
     </nav>
   );

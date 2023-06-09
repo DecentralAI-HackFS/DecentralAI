@@ -138,3 +138,7 @@ button:focus-within {
   color: rgb(28 100 242);
   background-color: rgb(235 245 255);
 }
+
+[data-rk] {
+  height: 100%;
+}
