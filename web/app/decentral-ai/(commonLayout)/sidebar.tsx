@@ -7,8 +7,8 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <aside className="w-[60px] border-r border-gray-200" aria-label="Sidebar">
-      <div className="">
+    <aside className="w-[60px] shrink-0 border-r border-gray-200" aria-label="Sidebar">
+      <div>
         <div className="flex flex-col items-center gap-4 pt-4 pb-7 border-b border-gray-200">
           <NavItem>
             <svg
