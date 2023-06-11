@@ -22,7 +22,7 @@ const menuData = [
   },
   {
     name: "Datasets",
-    path: "#",
+    path: "/decentral-ai/datasets",
     value: "datasets",
   },
   {

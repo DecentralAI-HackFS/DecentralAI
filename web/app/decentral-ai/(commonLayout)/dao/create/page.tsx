@@ -10,7 +10,7 @@ import Steps from './steps';
 
 const DaoCreation = () => {
   const [step, setStep] = useState(StepType.CREATE_NEW_DAO);
-  console.log(setStep);
+  
   const steps = useMemo(() => {
     const tempSteps = [
       {
