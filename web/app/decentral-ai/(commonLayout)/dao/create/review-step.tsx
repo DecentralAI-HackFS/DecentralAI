@@ -1,30 +1,31 @@
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { PencilIcon } from "@heroicons/react/24/outline";
 
-import { StepType } from './enum/step';
+import { StepType } from "./enum/step";
 
 interface ReviewStepProps {
   onChangeStep: (step: StepType) => void;
+  onSubmit: () => void;
 }
 
 const DAODetailsData = [
-  { title: 'DAO Name', value: 'FVMLearnDAO' },
-  { title: 'Logo', value: 'None' },
+  { title: "DAO Name", value: "FVMLearnDAO" },
+  { title: "Logo", value: "None" },
   {
-    title: 'Short Description',
+    title: "Short Description",
     value:
-      'A Decentralized Autonomous Organization for FileCoin Virtual Machine Education.',
+      "A Decentralized Autonomous Organization for FileCoin Virtual Machine Education.",
   },
   {
-    title: 'About this DAO',
+    title: "About this DAO",
     value:
-      'FVMLearnDAO is a community-driven DAO that aims to revolutionize education on the FileCoin Virtual Machine (FVM). We collect tutorials, training materials, and resources created by DAO members, utilizing them to fine-tune a ChatGPT-based AI tool. This AI tool will serve as an interactive and personalized educational companion, guiding individuals on how to effectively develop on the FileCoin Virtual Machine. ',
+      "FVMLearnDAO is a community-driven DAO that aims to revolutionize education on the FileCoin Virtual Machine (FVM). We collect tutorials, training materials, and resources created by DAO members, utilizing them to fine-tune a ChatGPT-based AI tool. This AI tool will serve as an interactive and personalized educational companion, guiding individuals on how to effectively develop on the FileCoin Virtual Machine. ",
   },
-  { title: 'Sample Data', value: 'A Comprehensive Tutorial on Using FVM.txt' },
+  { title: "Sample Data", value: "A Comprehensive Tutorial on Using FVM.txt" },
 ];
 
 const TokenDetailsData = [
   {
-    title: 'Token Name',
+    title: "Token Name",
     value: (
       <div className="flex items-center gap-4">
         <p>FVML</p>
@@ -35,7 +36,7 @@ const TokenDetailsData = [
     ),
   },
   {
-    title: 'Token Symbol',
+    title: "Token Symbol",
     value: (
       <div className="flex items-center gap-4">
         <p>FVML</p>
@@ -46,7 +47,7 @@ const TokenDetailsData = [
     ),
   },
   {
-    title: 'Token Supply',
+    title: "Token Supply",
     value: (
       <div className="flex items-center gap-4">
         <p>100,000</p>
@@ -57,17 +58,17 @@ const TokenDetailsData = [
     ),
   },
   {
-    title: 'Initial Token Allocation',
-    value: '00xd00...e273 (50%),  00qg7n...5yvp  (50%)',
+    title: "Initial Token Allocation",
+    value: "00xd00...e273 (50%),  00qg7n...5yvp  (50%)",
   },
   {
-    title: 'Rewards Distribution',
+    title: "Rewards Distribution",
     value:
-      'Funder (30%), Data Contributor (20%), Data Wizard (20%), Storage Provider (30%)',
+      "Funder (30%), Data Contributor (20%), Data Wizard (20%), Storage Provider (30%)",
   },
 ];
 
-const ReviewStep = ({ onChangeStep }: ReviewStepProps) => {
+const ReviewStep = ({ onChangeStep, onSubmit }: ReviewStepProps) => {
   return (
     <div>
       <div>
@@ -132,6 +133,7 @@ const ReviewStep = ({ onChangeStep }: ReviewStepProps) => {
         <button
           type="button"
           className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={onSubmit}
         >
           Deploy DAO
         </button>

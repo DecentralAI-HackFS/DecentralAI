@@ -1,10 +1,18 @@
-import { StepType } from './enum/step';
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { StepType } from "./enum/step";
+import { DaoFormData } from "./model/daoForm";
 
 interface CreateNewDaoStepProps {
   onChangeStep: (step: StepType) => void;
+  register: UseFormRegister<DaoFormData>;
+  errors: FieldErrors<DaoFormData>;
 }
 
-const CreateNewDaoStep = ({ onChangeStep }: CreateNewDaoStepProps) => {
+const CreateNewDaoStep = ({
+  onChangeStep,
+  register,
+  errors,
+}: CreateNewDaoStepProps) => {
   return (
     <div>
       <div>
@@ -21,8 +29,14 @@ const CreateNewDaoStep = ({ onChangeStep }: CreateNewDaoStepProps) => {
           <input
             type="text"
             className="block w-full rounded-lg border border-gray-300 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-xs"
-            // required=""
+            {...register("daoName", {
+              required: {
+                message: "Name is required.",
+                value: true,
+              },
+            })}
           />
+          <p>{errors.daoName?.message}</p>
         </div>
         <div>
           <p className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">

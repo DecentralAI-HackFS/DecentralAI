@@ -182,7 +182,7 @@ const NormalForm = () => {
         remember_me: true,
       },
     });
-    router.push("/");
+    router.push("/decentral-ai");
   };
 
   if (isLoadingWalletLogin)
