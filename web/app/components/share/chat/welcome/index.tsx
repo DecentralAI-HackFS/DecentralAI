@@ -11,7 +11,7 @@ import Select from '@/app/components/base/select'
 import { DEFAULT_VALUE_MAX_LEN } from '@/config'
 import TemplateVarPanel, { PanelTitle, VarOpBtnGroup } from '../value-panel'
 import { AppInfo, PromptTemplate, ChatBtn, EditBtn, FootLogo } from './massive-component'
-
+import * as LitJsSdk from "@lit-protocol/lit-node-client";
 // regex to match the {{}} and replace it with a span
 const regex = /\{\{([^}]+)\}\}/g
 
@@ -148,11 +148,47 @@ const Welcome: FC<IWelcomeProps> = ({
     return !hasEmptyInput
   }
 
-  const handleChat = () => {
-    if (!canChat()) {
-      return
+  const handleChat = async() => {
+    // @ts-ignore
+    try {
+      const client = window.litNodeClient;
+      console.log('client', client)
+      console.log('LitJsSdk', LitJsSdk)
+      const resourceId = {
+        baseUrl: "localhost:3000",
+        path: "/chat",
+        orgId: "",
+        role: "",
+        extraData: "",
+      };
+      const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'mumbai' })
+      const accessControlConditions = [
+        {
+          contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
+          standardContractType: "ERC721",
+          chain: 'mumbai',
+          method: "balanceOf",
+          parameters: [":userAddress"],
+          returnValueTest: {
+            comparator: ">",
+            value: "0",
+          },
+        },
+      ];
+      await client.saveSigningCondition({
+        accessControlConditions,
+        chain: 'mumbai',
+        authSig,
+        resourceId,
+      });
+      if (!canChat()) {
+        return
+      }
+      onStartChat(inputs)
+    } catch (e) {
+      notify({ type: 'error', message: 'You do not have permission to chat' })
     }
-    onStartChat(inputs)
+    
   }
 
   const renderNoVarPanel = () => {
