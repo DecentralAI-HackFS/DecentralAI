@@ -20,6 +20,7 @@ import s from './index.module.css'
 import Link from 'next/link'
 import Toast from '@/app/components/base/toast'
 import { formatNumber } from '@/utils/format'
+import {WriteContractResult} from '@wagmi/core'
 
 type StepTwoProps = {
   hasSetAPIKEY: boolean,
@@ -30,6 +31,7 @@ type StepTwoProps = {
   onStepChange: (delta: number) => void,
   updateIndexingTypeCache: (type: string) => void,
   updateResultCache: (res: createDocumentResponse) => void
+  writeAsync: () => Promise<WriteContractResult>
 }
 
 enum SegmentType {
@@ -50,6 +52,7 @@ const StepTwo = ({
   onStepChange,
   updateIndexingTypeCache,
   updateResultCache,
+  writeAsync,
 }: StepTwoProps) => {
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -198,6 +201,8 @@ const StepTwo = ({
   }
   const createHandle = async () => {
     try {
+      await writeAsync()
+      
       let res;
       const params = getCreationParams()
       if (!datasetId) {

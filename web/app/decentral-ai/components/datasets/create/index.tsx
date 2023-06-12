@@ -14,6 +14,13 @@ import StepTwo from "@/app/decentral-ai/components/datasets/create/step-two";
 import StepThree from "@/app/decentral-ai/components/datasets/create/step-three";
 import Sidebar from "@/app/decentral-ai/(commonLayout)/datasets/create/siderbar";
 
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
+import { ethers } from 'ethers'
+
 type DatasetUpdateFormProps = {
   datasetId?: string;
 };
@@ -55,6 +62,31 @@ const DatasetUpdateForm = ({ datasetId }: DatasetUpdateFormProps) => {
     const hasSetKey = data.providers.some(({ is_valid }) => is_valid);
     setHasSetAPIKEY(hasSetKey);
   };
+
+  const {
+    config,
+    error: prepareError,
+    isError: isPrepareError,
+  } = usePrepareContractWrite({
+    address: '0xd00D3f1FFA6ee948bb0A2A04c473f6abb4c399D0',
+    abi: [
+      {
+        inputs: [],
+        name: "requestIndexing",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function"
+      }
+    ],
+    functionName: 'requestIndexing',
+    value: BigInt(ethers.utils.parseEther('0.1').toString()),
+  })
+  const { data, error, isError, writeAsync } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
 
   useEffect(() => {
     checkAPIKey();
@@ -109,6 +141,7 @@ const DatasetUpdateForm = ({ datasetId }: DatasetUpdateFormProps) => {
               onStepChange={changeStep}
               updateIndexingTypeCache={updateIndexingTypeCache}
               updateResultCache={updateResultCache}
+              writeAsync={writeAsync!}
             />
           )}
           {step === 3 && (

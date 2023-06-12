@@ -1,18 +1,16 @@
 "use client";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { arbitrum, optimism, polygon } from "viem/chains";
+import { sepolia, filecoinCalibration } from "viem/chains";
 import {
   WagmiConfig,
   configureChains,
   createConfig,
-  mainnet,
-  sepolia,
 } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 export const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, sepolia],
+  [sepolia, filecoinCalibration],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
     publicProvider(),

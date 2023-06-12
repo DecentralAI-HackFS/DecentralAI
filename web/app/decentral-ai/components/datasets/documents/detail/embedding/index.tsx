@@ -30,6 +30,7 @@ type Props = {
   datasetId?: string
   documentId?: string
   indexingType?: string
+  
 }
 
 const StopIcon: FC<{ className?: string }> = ({ className }) => {
