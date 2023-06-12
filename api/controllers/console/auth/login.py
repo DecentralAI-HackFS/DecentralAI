@@ -72,7 +72,7 @@ class Web3LoginRequestMessageApi(Resource):
             "chainId": args['chainId'],
             "address": args['address'],
             "statement": "Please confirm",
-            "uri": current_app.config['API_URL'],
+            "uri": current_app.config['APP_URL'],
             "expirationTime": expirationTime,
             "notBefore": "2020-01-01T00:00:00.000Z",
             "timeout": 15
