@@ -7,7 +7,7 @@ import { useWorkspacesContext } from "@/context/workspace-context";
 const menuData = [
   {
     name: "Overview",
-    path: "#",
+    path: "/decentral-ai/overview",
     value: "overview",
   },
   {
