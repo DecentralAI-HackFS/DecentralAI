@@ -8,7 +8,6 @@ const ManageDaoRedirect = () => {
   const { workspaces } = useWorkspacesContext();
 
   useEffect(() => {
-    console.log("workspaces", workspaces);
     if (workspaces.length === 0) {
       router.push("/decentral-ai/dao/create");
     } else {

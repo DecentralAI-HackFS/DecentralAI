@@ -19,7 +19,6 @@ const DaoCreation = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<DaoFormData>();
 
