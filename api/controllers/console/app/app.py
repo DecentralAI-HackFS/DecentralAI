@@ -98,7 +98,7 @@ class AppListApi(Resource):
         parser.add_argument('page', type=inputs.int_range(1, 99999), required=False, default=1, location='args')
         parser.add_argument('limit', type=inputs.int_range(1, 100), required=False, default=20, location='args')
         args = parser.parse_args()
-        current_tenant_id = current_user.current_tenant if current_user.current_tenant else None
+        current_tenant_id = current_user.current_tenant_id if current_user.current_tenant_id else None
         app_models = db.paginate(
             db.select(App).where(App.tenant_id == current_tenant_id).order_by(App.created_at.desc()),
             page=args['page'],
