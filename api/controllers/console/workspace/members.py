@@ -39,6 +39,38 @@ class MemberListApi(Resource):
         members = TenantService.get_tenant_members(current_user.current_tenant)
         return {'result': 'success', 'accounts': members}, 200
 
+class MemberJoinApi(Resource):
+
+    @setup_required
+    @login_required
+    @account_initialization_required
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('tenant_id', type=str, required=True, location='json')
+        parser.add_argument('role', type=str, required=True, default='admin', location='json')
+        args = parser.parse_args()
+        account_id = current_user.id
+        try:
+            RegisterService.add_member(args['tenant_id'], account_id, role=args['role'])
+            account = db.session.query(Account, TenantAccountJoin.role).join(
+                TenantAccountJoin, Account.id == TenantAccountJoin.account_id
+            ).filter(Account.id == account_id).first()
+            account, role = account
+            account = marshal(account, account_fields)
+            account['role'] = role
+        except services.errors.account.CannotOperateSelfError as e:
+            return {'code': 'cannot-operate-self', 'message': str(e)}, 400
+        except services.errors.account.NoPermissionError as e:
+            return {'code': 'forbidden', 'message': str(e)}, 403
+        except services.errors.account.AccountAlreadyInTenantError as e:
+            return {'code': 'email-taken', 'message': str(e)}, 409
+        except Exception as e:
+            return {'code': 'unexpected-error', 'message': str(e)}, 500
+
+        # todo:413
+
+        return {'result': 'success', 'account': account}, 201
+
 
 class MemberInviteEmailApi(Resource):
     """Invite a new member by email."""
@@ -136,6 +168,7 @@ class MemberUpdateRoleApi(Resource):
 
 
 api.add_resource(MemberListApi, '/workspaces/current/members')
+api.add_resource(MemberJoinApi, '/workspaces/current/members')
 api.add_resource(MemberInviteEmailApi, '/workspaces/current/members/invite-email')
 api.add_resource(MemberCancelInviteApi, '/workspaces/current/members/<uuid:member_id>')
 api.add_resource(MemberUpdateRoleApi, '/workspaces/current/members/<uuid:member_id>/update-role')

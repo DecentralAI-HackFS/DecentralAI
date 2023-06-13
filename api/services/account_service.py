@@ -11,7 +11,7 @@ from sqlalchemy import func
 from events.tenant_event import tenant_was_created
 from services.errors.account import AccountLoginError, CurrentPasswordIncorrectError, LinkAccountIntegrateError, \
     TenantNotFound, AccountNotLinkTenantError, InvalidActionError, CannotOperateSelfError, MemberNotInTenantError, \
-    RoleAlreadyAssignedError, NoPermissionError, AccountRegisterError, AccountAlreadyInTenantError
+    RoleAlreadyAssignedError, NoPermissionError, AccountRegisterError, AccountAlreadyInTenantError, AccountNotFound
 from libs.helper import get_remote_ip
 from libs.password import compare_password, hash_password
 from libs.rsa import generate_key_pair
@@ -378,6 +378,30 @@ class RegisterService:
             TenantService.check_member_permission(tenant, inviter, account, 'add')
             ta = TenantAccountJoin.query.filter_by(
                 tenant_id=tenant.id,
+                account_id=account.id
+            ).first()
+            if ta:
+                raise AccountAlreadyInTenantError("Account already in tenant.")
+
+        ta = TenantService.create_tenant_member(tenant, account, role)
+        return ta
+
+    @staticmethod
+    def add_member(tenant_id: str, account_id: str, role: str = 'normal'):
+
+        account = Account.query.filter_by(id=account_id).first()
+        tenant = Tenant.query.filter_by(
+            id=tenant_id
+        ).first()
+        if not tenant:
+            raise TenantNotFound("Tenant not found.")
+
+        if not account:
+            raise AccountNotFound("Account not found.")
+
+        else:
+            ta = TenantAccountJoin.query.filter_by(
+                tenant_id=tenant_id,
                 account_id=account.id
             ).first()
             if ta:
