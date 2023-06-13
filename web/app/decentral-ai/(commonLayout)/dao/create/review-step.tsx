@@ -1,74 +1,86 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 
 import { StepType } from "./enum/step";
+import { DaoFormData } from "./model/daoForm";
 
 interface ReviewStepProps {
   onChangeStep: (step: StepType) => void;
   onSubmit: () => void;
+  formData: DaoFormData;
 }
 
-const DAODetailsData = [
-  { title: "DAO Name", value: "FVMLearnDAO" },
-  { title: "Logo", value: "None" },
-  {
-    title: "Short Description",
-    value:
-      "A Decentralized Autonomous Organization for FileCoin Virtual Machine Education.",
-  },
-  {
-    title: "About this DAO",
-    value:
-      "FVMLearnDAO is a community-driven DAO that aims to revolutionize education on the FileCoin Virtual Machine (FVM). We collect tutorials, training materials, and resources created by DAO members, utilizing them to fine-tune a ChatGPT-based AI tool. This AI tool will serve as an interactive and personalized educational companion, guiding individuals on how to effectively develop on the FileCoin Virtual Machine. ",
-  },
-  { title: "Sample Data", value: "A Comprehensive Tutorial on Using FVM.txt" },
-];
+const ReviewStep = ({ onChangeStep, onSubmit, formData }: ReviewStepProps) => {
+  const DAODetailsData = [
+    { title: "DAO Name", value: formData.daoName },
+    {
+      title: "Logo",
+      value: formData.daoLogo?.[0] ? (
+        <img
+          className="rounded-lg"
+          alt="not found"
+          width={"250px"}
+          src={URL.createObjectURL(formData.daoLogo?.[0])}
+        />
+      ) : (
+        "No logo uploaded"
+      ),
+    },
+    {
+      title: "Short Description",
+      value: formData.daoDescription,
+    },
+    {
+      title: "About this DAO",
+      value: formData.daoAbout,
+    },
+    { title: "Sample Data", value: formData.daoSampleData?.[0]?.name },
+  ];
 
-const TokenDetailsData = [
-  {
-    title: "Token Name",
-    value: (
-      <div className="flex items-center gap-4">
-        <p>FVML</p>
-        <div className="flex items-center justify-center rounded-md bg-[#e1effe] px-2.5">
-          <p className="text-xs font-medium text-[#1c64f2]">Not changeable</p>
+  const TokenDetailsData = [
+    {
+      title: "Token Name",
+      value: (
+        <div className="flex items-center gap-4">
+          <p>{formData.tokenName}</p>
+          <div className="flex items-center justify-center rounded-md bg-[#e1effe] px-2.5">
+            <p className="text-xs font-medium text-[#1c64f2]">Not changeable</p>
+          </div>
         </div>
-      </div>
-    ),
-  },
-  {
-    title: "Token Symbol",
-    value: (
-      <div className="flex items-center gap-4">
-        <p>FVML</p>
-        <div className="flex items-center justify-center rounded-md bg-[#e1effe] px-2.5">
-          <p className="text-xs font-medium text-[#1c64f2]">Not changeable</p>
+      ),
+    },
+    {
+      title: "Token Symbol",
+      value: (
+        <div className="flex items-center gap-4">
+          <p>{formData.tokenSymbol}</p>
+          <div className="flex items-center justify-center rounded-md bg-[#e1effe] px-2.5">
+            <p className="text-xs font-medium text-[#1c64f2]">Not changeable</p>
+          </div>
         </div>
-      </div>
-    ),
-  },
-  {
-    title: "Token Supply",
-    value: (
-      <div className="flex items-center gap-4">
-        <p>100,000</p>
-        <div className="flex items-center justify-center rounded-md bg-[#e1effe] px-2.5">
-          <p className="text-xs font-medium text-[#1c64f2]">Not changeable</p>
+      ),
+    },
+    {
+      title: "Token Supply",
+      value: (
+        <div className="flex items-center gap-4">
+          <p>{formData.tokenSupply}</p>
+          <div className="flex items-center justify-center rounded-md bg-[#e1effe] px-2.5">
+            <p className="text-xs font-medium text-[#1c64f2]">Not changeable</p>
+          </div>
         </div>
-      </div>
-    ),
-  },
-  {
-    title: "Initial Token Allocation",
-    value: "00xd00...e273 (50%),  00qg7n...5yvp  (50%)",
-  },
-  {
-    title: "Rewards Distribution",
-    value:
-      "Funder (30%), Data Contributor (20%), Data Wizard (20%), Storage Provider (30%)",
-  },
-];
+      ),
+    },
+    // {
+    //   title: "Initial Token Allocation",
+    //   value: "00xd00...e273 (50%),  00qg7n...5yvp  (50%)",
+    // },
+    // {
+    //   title: "Rewards Distribution",
+    //   value:
+    //     "Funder (30%), Data Contributor (20%), Data Wizard (20%), Storage Provider (30%)",
+    // },
+  ];
 
-const ReviewStep = ({ onChangeStep, onSubmit }: ReviewStepProps) => {
   return (
     <div>
       <div>

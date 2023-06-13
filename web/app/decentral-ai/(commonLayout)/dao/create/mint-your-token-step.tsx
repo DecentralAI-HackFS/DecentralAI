@@ -1,12 +1,18 @@
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/20/solid';
+import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/20/solid";
 
-import { StepType } from './enum/step';
+import { StepType } from "./enum/step";
+import { DaoFormData } from "./model/daoForm";
+import { UseFormRegister } from "react-hook-form";
 
 interface MintYourTokenStepProps {
   onChangeStep: (step: StepType) => void;
+  register: UseFormRegister<DaoFormData>;
 }
 
-const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
+const MintYourTokenStep = ({
+  onChangeStep,
+  register,
+}: MintYourTokenStepProps) => {
   return (
     <div>
       <div>
@@ -22,7 +28,8 @@ const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
           </div>
           <input
             type="text"
-            className="block w-full rounded-lg border border-gray-300 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-xs"
+            className="block w-full rounded-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            {...register("tokenName")}
           />
         </div>
         <div>
@@ -31,7 +38,8 @@ const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
           </div>
           <input
             type="text"
-            className="block w-full rounded-lg border border-gray-300 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-xs"
+            className="block w-full rounded-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            {...register("tokenSymbol")}
           />
         </div>
         <div>
@@ -40,12 +48,13 @@ const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
           </div>
           <input
             type="text"
-            className="block w-full rounded-lg border border-gray-300 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-xs"
+            className="block w-full rounded-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            {...register("tokenSupply")}
           />
         </div>
-        <div>
+        <div className="hidden">
           <p className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-            Token Supply
+            Initial Token Allocation
           </p>
           <div className="flex flex-col rounded-md border border-gray-100 px-6 py-3">
             <div className="flex gap-3">
@@ -55,7 +64,7 @@ const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
                 </div>
                 <input
                   type="text"
-                  className="block w-full rounded-lg border border-gray-300 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-xs"
+                  className="block w-full rounded-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 />
               </div>
               <div className="w-[200px] shrink-0">
@@ -65,7 +74,7 @@ const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
                 <div className="flex">
                   <input
                     type="text"
-                    className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   />
                   <span className="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
                     %
@@ -88,7 +97,7 @@ const MintYourTokenStep = ({ onChangeStep }: MintYourTokenStepProps) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="hidden">
           <p className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Rewards Distribution
           </p>

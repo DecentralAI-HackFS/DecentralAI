@@ -19,6 +19,7 @@ const DaoCreation = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<DaoFormData>();
 
@@ -56,6 +57,8 @@ const DaoCreation = () => {
     });
   };
 
+  console.log(watch("daoSampleData"))
+
   return (
     <div className="h-full">
       <div className="mx-auto flex h-full gap-[88px]">
@@ -63,19 +66,28 @@ const DaoCreation = () => {
           <Steps steps={steps} />
         </div>
         <div className="box-border h-full grow overflow-auto pb-20 pt-9">
-          <div className="max-w-[684px]">
+          <div className="max-w-[684px] pr-4">
             {step === StepType.CREATE_NEW_DAO && (
               <CreateNewDaoStep
                 onChangeStep={setStep}
                 register={register}
-                errors={errors}
               />
             )}
             {step === StepType.MINT_YOUR_TOKEN && (
-              <MintYourTokenStep onChangeStep={setStep} />
+              <MintYourTokenStep onChangeStep={setStep} register={register} />
             )}
             {step === StepType.REVIEW && (
               <ReviewStep
+                formData={{
+                  daoName: watch("daoName"),
+                  daoDescription: watch("daoDescription"),
+                  daoLogo: watch("daoLogo"),
+                  daoAbout: watch("daoAbout"),
+                  daoSampleData: watch("daoSampleData"),
+                  tokenName: watch("tokenName"),
+                  tokenSymbol: watch("tokenSymbol"),
+                  tokenSupply: watch("tokenSupply"),
+                }}
                 onChangeStep={setStep}
                 onSubmit={handleSubmit(handleCreateNewDao)}
               />
