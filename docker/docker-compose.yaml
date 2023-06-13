@@ -2,7 +2,7 @@ version: '3.1'
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.3.0
+    image: peggy120/decentral-ai-api:1.1.0
     restart: always
     environment:
       # Startup mode, 'api' starts the API server.
@@ -106,11 +106,12 @@ services:
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
+      - ./api/.env:/app/api/.env
 
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:0.3.0
+    image: peggy120/decentral-ai-api:1.1.0
     restart: always
     environment:
       # Startup mode, 'worker' starts the Celery worker for processing the queue.
@@ -153,10 +154,11 @@ services:
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
+      - ./api/.env:/app/api/.env
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:0.3.0
+    image: peggy120/decentral-ai-web:1.1.0
     restart: always
     environment:
       EDITION: SELF_HOSTED
@@ -168,6 +170,8 @@ services:
       # console or api domain.
       # example: http://udify.app
       APP_URL: ''
+    volumes:
+      - ./web/.env:/app/web/.env
 
   # The postgres database.
   db:
@@ -194,6 +198,8 @@ services:
       - ./volumes/redis/data:/data
     # Set the redis password when startup redis server.
     command: redis-server --requirepass difyai123456
+    ports:
+      - "6379:6379"
 
   # The Weaviate vector store.
   weaviate:
@@ -215,6 +221,8 @@ services:
       AUTHENTICATION_APIKEY_USERS: 'hello@dify.ai'
       AUTHORIZATION_ADMINLIST_ENABLED: 'true'
       AUTHORIZATION_ADMINLIST_USERS: 'hello@dify.ai'
+    ports:
+      - "8080:8080"
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
@@ -224,8 +232,15 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/proxy.conf:/etc/nginx/proxy.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - api
       - web
     ports:
       - "80:80"
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
