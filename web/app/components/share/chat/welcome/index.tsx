@@ -151,36 +151,6 @@ const Welcome: FC<IWelcomeProps> = ({
   const handleChat = async() => {
     // @ts-ignore
     try {
-      const client = window.litNodeClient;
-      console.log('client', client)
-      console.log('LitJsSdk', LitJsSdk)
-      const resourceId = {
-        baseUrl: "localhost:3000",
-        path: "/chat",
-        orgId: "",
-        role: "",
-        extraData: "",
-      };
-      const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'mumbai' })
-      const accessControlConditions = [
-        {
-          contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
-          standardContractType: "ERC721",
-          chain: 'mumbai',
-          method: "balanceOf",
-          parameters: [":userAddress"],
-          returnValueTest: {
-            comparator: ">",
-            value: "0",
-          },
-        },
-      ];
-      await client.saveSigningCondition({
-        accessControlConditions,
-        chain: 'mumbai',
-        authSig,
-        resourceId,
-      });
       if (!canChat()) {
         return
       }

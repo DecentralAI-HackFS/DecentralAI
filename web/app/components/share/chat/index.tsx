@@ -24,7 +24,7 @@ import AppUnavailable from '../../base/app-unavailable'
 import { userInputsFormToPromptVariables } from '@/utils/model-config'
 import { SuggestedQuestionsAfterAnswerConfig } from '@/models/debug'
 import { InstalledApp } from '@/models/explore'
-
+import * as LitJsSdk from "@lit-protocol/lit-node-client";
 import s from './style.module.css'
 
 export type IMainProps = {
@@ -300,7 +300,44 @@ const Main: FC<IMainProps> = ({
     notify({ type: 'error', message })
   }
 
-  const checkCanSend = () => {
+  const checkCanSend = async() => {
+    try {
+      // @ts-ignore
+      const client = window.litNodeClient;
+      console.log('client', client)
+      console.log('LitJsSdk', LitJsSdk)
+      const resourceId = {
+        baseUrl: "localhost:3000",
+        path: "/chat",
+        orgId: "",
+        role: "",
+        extraData: "",
+      };
+      const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'mumbai' })
+      const accessControlConditions = [
+        {
+          contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
+          standardContractType: "ERC721",
+          chain: 'mumbai',
+          method: "balanceOf",
+          parameters: [":userAddress"],
+          returnValueTest: {
+            comparator: ">",
+            value: "0",
+          },
+        },
+      ];
+      await client.saveSigningCondition({
+        accessControlConditions,
+        chain: 'mumbai',
+        authSig,
+        resourceId,
+      });
+    } catch (e) {
+      notify({ type: 'error', message: 'You have no permission' })
+      return false
+    }
+    
     const prompt_variables = promptConfig?.prompt_variables
     const inputs = currInputs
     if (!inputs || !prompt_variables || prompt_variables?.length === 0) {

@@ -47,7 +47,7 @@ export type IChatProps = {
   isHideSendInput?: boolean
   onFeedback?: FeedbackFunc
   onSubmitAnnotation?: SubmitAnnotationFunc
-  checkCanSend?: () => boolean
+  checkCanSend?: () => Promise<boolean>
   onSend?: (message: string) => void
   displayScene?: DisplayScene
   useCurrentUserAvatar?: boolean
@@ -441,8 +441,8 @@ const Chat: FC<IChatProps> = ({
     }
   }, [controlClearQuery])
 
-  const handleSend = () => {
-    if (!valid() || (checkCanSend && !checkCanSend()))
+  const handleSend = async() => {
+    if (!valid() || (checkCanSend && !await checkCanSend()))
       return
     onSend(query)
     if (!isResponsing) {
