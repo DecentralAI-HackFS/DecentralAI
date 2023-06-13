@@ -10,6 +10,7 @@ import { upload } from '@/service/base'
 
 import cn from 'classnames'
 import s from './index.module.css'
+import * as LitJsSdk from "@lit-protocol/lit-node-client";
 
 type IFileUploaderProps = {
   file?: FileEntity;
@@ -95,6 +96,34 @@ const FileUploader = ({ file, onFileUpdate }: IFileUploaderProps) => {
     }
     setCurrentFile(file)
     setUploading(true)
+    // @ts-ignore
+    const client = window.litNodeClient
+    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: "mumbai" });
+    const {symmetricKey,encryptedFile}  = await LitJsSdk.encryptFile({
+      // @ts-ignore
+      file,
+    })
+    const accessControlConditions = [
+      {
+        contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
+        standardContractType: "ERC721",
+        chain: 'mumbai',
+        method: "balanceOf",
+        parameters: [":userAddress"],
+        returnValueTest: {
+          comparator: ">",
+          value: "0",
+        },
+      },
+    ]
+    const encryptedSymmetricKey = await client.saveEncryptionKey({
+      accessControlConditions,
+      symmetricKey,
+      authSig,
+      chain: "mumbai",
+    })
+    // TODO save encryptedSymmetricKey to database
+    const encryptedSymmetricKeyBase16 = LitJsSdk.uint8arrayToString(encryptedSymmetricKey, "base16")
     const formData = new FormData()
     formData.append('file', file)
     // store for abort
