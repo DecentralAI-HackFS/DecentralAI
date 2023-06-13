@@ -70,15 +70,15 @@ const ReviewStep = ({ onChangeStep, onSubmit, formData }: ReviewStepProps) => {
         </div>
       ),
     },
-    // {
-    //   title: "Initial Token Allocation",
-    //   value: "00xd00...e273 (50%),  00qg7n...5yvp  (50%)",
-    // },
-    // {
-    //   title: "Rewards Distribution",
-    //   value:
-    //     "Funder (30%), Data Contributor (20%), Data Wizard (20%), Storage Provider (30%)",
-    // },
+    {
+      title: "Initial Token Allocation",
+      value: "0x862...A23 (100%)",
+    },
+    {
+      title: "Rewards Distribution",
+      value:
+        "Funder (30%), Data Contributor (20%), Data Wizard (20%), Storage Provider (30%)",
+    },
   ];
 
   return (

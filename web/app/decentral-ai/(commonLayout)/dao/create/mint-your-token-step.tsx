@@ -52,7 +52,7 @@ const MintYourTokenStep = ({
             {...register("tokenSupply")}
           />
         </div>
-        <div className="hidden">
+        <div>
           <p className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Initial Token Allocation
           </p>
@@ -63,6 +63,7 @@ const MintYourTokenStep = ({
                   Address
                 </div>
                 <input
+                  defaultValue="0x862c17d06192e113aA82dF34c170C58E297d4A23"
                   type="text"
                   className="block w-full rounded-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 />
@@ -73,6 +74,7 @@ const MintYourTokenStep = ({
                 </div>
                 <div className="flex">
                   <input
+                    defaultValue="100"
                     type="text"
                     className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   />
@@ -93,11 +95,11 @@ const MintYourTokenStep = ({
                 <PlusSmallIcon className="h-5 w-5" color="#1C64F2" />
                 <span className="text-xs text-[#1C64F2]">Wallet</span>
               </div>
-              <div className="w-[220px] text-xs">0%</div>
+              <div className="w-[220px] text-xs">100%</div>
             </div>
           </div>
         </div>
-        <div className="hidden">
+        <div>
           <p className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Rewards Distribution
           </p>
@@ -111,6 +113,7 @@ const MintYourTokenStep = ({
               <div className="w-[200px]">
                 <div className="flex">
                   <input
+                    defaultValue={30}
                     type="text"
                     className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   />
@@ -126,6 +129,7 @@ const MintYourTokenStep = ({
               <div className="w-[200px]">
                 <div className="flex">
                   <input
+                    defaultValue={20}
                     type="text"
                     className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   />
@@ -140,6 +144,7 @@ const MintYourTokenStep = ({
               <div className="w-[200px]">
                 <div className="flex">
                   <input
+                    defaultValue={20}
                     type="text"
                     className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   />
@@ -154,6 +159,7 @@ const MintYourTokenStep = ({
               <div className="w-[200px]">
                 <div className="flex">
                   <input
+                    defaultValue={30}
                     type="text"
                     className="block w-full min-w-0 flex-1 rounded-none rounded-l-lg border border-gray-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   />
