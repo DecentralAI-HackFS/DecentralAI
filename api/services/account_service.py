@@ -146,6 +146,11 @@ class AccountService:
 class TenantService:
 
     @staticmethod
+    def get_all_tenants() -> List[Tenant]:
+        """Get all tenants"""
+        return Tenant.query.all()
+
+    @staticmethod
     def create_tenant(name: str) -> Tenant:
         """Create tenant"""
         tenant = Tenant(name=name)

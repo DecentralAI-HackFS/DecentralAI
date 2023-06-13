@@ -44,6 +44,14 @@ tenants_fields = {
     'current': fields.Boolean
 }
 
+class TenantAllApi(Resource):
+    @setup_required
+    @login_required
+    @account_initialization_required
+    def get(self):
+        tenants = TenantService.get_all_tenants()
+
+        return {'workspaces': marshal(tenants, tenants_fields)}, 200
 
 class TenantListApi(Resource):
     @setup_required
@@ -110,6 +118,7 @@ class SwitchWorkspaceApi(Resource):
         return {'result': 'success', 'new_tenant': marshal(WorkspaceService.get_tenant_info(new_tenant), tenant_fields)}
 
 
+api.add_resource(TenantAllApi, '/workspaces/all')  # GET for getting all tenants
 api.add_resource(TenantListApi, '/workspaces')  # GET for getting all tenants
 api.add_resource(TenantApi, '/workspaces/current', endpoint='workspaces_current')  # GET for getting current tenant info
 api.add_resource(TenantApi, '/info', endpoint='info')  # Deprecated
