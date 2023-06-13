@@ -18,6 +18,8 @@ import Confirm from '@/app/components/base/confirm'
 import useCopyToClipboard from '@/hooks/use-copy-to-clipboard'
 import { useContext } from 'use-context-selector'
 import I18n from '@/context/i18n'
+import { ToastContext } from '@/app/components/base/toast'
+import * as LitJsSdk from "@lit-protocol/lit-node-client";
 
 type ISecretKeyModalProps = {
   isShow: boolean
@@ -45,7 +47,7 @@ const SecretKeyModal = ({
 
   // const [isCopied, setIsCopied] = useState(false)
   const [copyValue, setCopyValue] = useState('')
-
+  const { notify } = useContext(ToastContext)
   useEffect(() => {
     if (copyValue) {
       const timeout = setTimeout(() => {
@@ -69,10 +71,48 @@ const SecretKeyModal = ({
   }
 
   const onCreate = async () => {
-    const res = await createApikey({ url: `/apps/${appId}/api-keys`, body: {} })
-    setVisible(true)
-    setNewKey(res)
-    mutate(commonParams)
+    try {
+      // @ts-ignore
+      const client = window.litNodeClient;
+      const resourceId = {
+        baseUrl: "localhost:3000",
+        path: "/app",
+        orgId: "",
+        role: "",
+        extraData: "",
+      };
+      const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'mumbai' })
+        const accessControlConditions = [
+          {
+            contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
+            standardContractType: "ERC721",
+            chain: 'mumbai',
+            method: "balanceOf",
+            parameters: [":userAddress"],
+            returnValueTest: {
+              comparator: ">",
+              value: "0",
+            },
+          },
+        ];
+        await client.saveSigningCondition({
+          accessControlConditions,
+          chain: 'mumbai',
+          authSig,
+          resourceId,
+        });
+        // const jwt = await client.getSignedToken({
+
+        //   accessControlConditions, chain: 'mumbai', authSig, resourceId
+        // })
+        // console.log('jwt', jwt)
+        const res = await createApikey({ url: `/apps/${appId}/api-keys`, body: {} })
+        setVisible(true)
+        setNewKey(res)
+        mutate(commonParams)
+    } catch (e) {
+      notify({ type: 'error', message: 'You have no permission' })
+    }
   }
 
   const generateToken = (token: string) => {
