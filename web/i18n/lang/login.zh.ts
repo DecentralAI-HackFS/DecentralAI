@@ -1,6 +1,6 @@
 const translation = {
   "pageTitle": "嗨，近来可好 👋",
-  "welcome": "欢迎来到 Dify, 登录以继续",
+  "welcome": "欢迎来到 DecentralAI, 登录以继续",
   "email": "邮箱",
   "password": "密码",
   "name": "用户名",
@@ -15,7 +15,7 @@ const translation = {
   "invitationCode": "邀请码",
   "interfaceLanguage": "界面语言",
   "timezone": "时区",
-  "go": "跳转至 Dify",
+  "go": "跳转至 DecentralAI",
   "sendUsMail": "发封邮件介绍你自己，我们会尽快处理。",
   "acceptPP": "我已阅读并接受隐私政策",
   "reset": "请运行以下命令重置密码",

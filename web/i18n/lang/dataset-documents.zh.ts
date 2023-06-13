@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: "文档",
-    desc: "数据集的所有文件都在这里显示，整个数据集都可以链接到 Dify 引用或通过 Chat 插件进行索引。",
+    desc: "数据集的所有文件都在这里显示，整个数据集都可以链接到 DecentralAI 引用或通过 Chat 插件进行索引。",
     addFile: "添加文件",
     table: {
       header: {
@@ -43,7 +43,7 @@ const translation = {
         tip: "您可以上传文件，从网站同步，或者从网络应用程序（如概念、GitHub 等）同步。",
       },
       sync: {
-        tip: "Dify 会定期从您的 Notion 中下载文件并完成处理。",
+        tip: "DecentralAI 会定期从您的 Notion 中下载文件并完成处理。",
       },
     },
     delete: {

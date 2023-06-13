@@ -10,7 +10,7 @@ const translation = {
   datasetDeleted: 'Dataset deleted',
   datasetDeleteFailed: 'Failed to delete dataset',
   didYouKnow: 'Did you know?',
-  intro1: 'The dataset can be integrated into the Dify application ',
+  intro1: 'The dataset can be integrated into the DecentralAI application ',
   intro2: 'as a context',
   intro3: ',',
   intro4: 'or it ',

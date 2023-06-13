@@ -10,7 +10,7 @@ const translation = {
   datasetDeleted: '数据集已删除',
   datasetDeleteFailed: '删除数据集失败',
   didYouKnow: '你知道吗？',
-  intro1: '数据集可以被集成到 Dify 应用中',
+  intro1: '数据集可以被集成到 DecentralAI 应用中',
   intro2: '作为上下文',
   intro3: ',',
   intro4: '或可以',

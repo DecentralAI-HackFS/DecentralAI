@@ -19,7 +19,16 @@ const Header = () => {
 
   return (
     <div className="flex items-center justify-between p-6 w-full">
-      <div className={style.logo}></div>
+      <div className="flex items-center">
+        <img
+          src="https://flowbite.com/docs/images/logo.svg"
+          className="h-6 mr-3"
+          alt="Flowbite Logo"
+        />
+        <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+          DecentralAI
+        </span>
+      </div>
 
       <div className="flex items-center gap-4">
         <Select

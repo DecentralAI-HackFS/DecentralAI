@@ -7,7 +7,7 @@ import LitProvider from "./litProvider";
 import { ChainProvider } from "./chainProvider";
 
 export const metadata = {
-  title: "Dify",
+  title: "DecentralAI",
 };
 
 const LocaleLayout = ({ children }: { children: React.ReactNode }) => {

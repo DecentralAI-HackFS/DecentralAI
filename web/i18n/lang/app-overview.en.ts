@@ -33,7 +33,7 @@ const translation = {
           copyRightPlaceholder: 'Enter the name of the author or organization',
           privacyPolicy: 'Privacy Policy',
           privacyPolicyPlaceholder: 'Enter the privacy policy',
-          privacyPolicyTip: 'Helps visitors understand the data the application collects, see Dify\'s <privacyPolicyLink>Privacy Policy</privacyPolicyLink>.',
+          privacyPolicyTip: 'Helps visitors understand the data the application collects, see DecentralAI\'s <privacyPolicyLink>Privacy Policy</privacyPolicyLink>.',
         },
       },
       customize: {
@@ -45,7 +45,7 @@ const translation = {
           name: 'Fork the client code, modify it and deploy to Vercel (recommended)',
           step1: 'Fork the client code and modify it',
           step1Tip: 'Click here to fork the source code into your GitHub account and modify the code',
-          step1Operation: 'Dify-WebClient',
+          step1Operation: 'DecentralAI-WebClient',
           step2: 'Configure the Web',
           step2Tip: 'Copy the Web API and APP ID,then paste them into the client code config/index.ts',
           step3: 'Deploy to Vercel',

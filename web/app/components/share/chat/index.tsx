@@ -59,7 +59,7 @@ const Main: FC<IMainProps> = ({
       if (plan !== 'basic')
         document.title = `${siteInfo.title}`
       else
-        document.title = `${siteInfo.title} - Powered by Dify`
+        document.title = `${siteInfo.title} - Powered by DecentralAI`
     }
 
   }, [siteInfo?.title, plan])
