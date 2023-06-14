@@ -1,12 +1,14 @@
 import { useWorkspacesContext } from "@/context/workspace-context";
+import { joinDaoApp } from "@/service/dao";
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
-import {
-  CheckCircleIcon,
-  CheckIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { Fragment, useState } from "react";
+import Toast from "../../components/base/toast";
+import { useTranslation } from "react-i18next";
+import { useSWRConfig } from "swr";
+import ExploreContext from "@/context/explore-context";
+import { useContext } from "use-context-selector";
 
 const mailingLists = [
   {
@@ -24,22 +26,47 @@ const mailingLists = [
     title: "Storage Provider",
     description: "Store DAO data.",
   },
+  {
+    id: 4,
+    title: "Instructor",
+    description: "Help fine-tune the chatbot with human instruction.",
+  },
+  {
+    id: 5,
+    title: "Server Host",
+    description: "Host the application.",
+  },
 ];
 
 const JoinButton = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [selectedMailingLists, setSelectedMailingLists] = useState(
     mailingLists[0]
   );
+  const { mutate } = useSWRConfig();
   const { workspaces } = useWorkspacesContext();
   const currentWorkspace = workspaces.filter((item) => item.current)?.[0];
+  const { setControlUpdateInstalledApps } = useContext(ExploreContext);
+
+  const handleAddToWorkspace = async () => {
+    await joinDaoApp({ daoId: currentWorkspace.id, role: "normal" });
+    Toast.notify({
+      type: "success",
+      message: t("common.api.success"),
+    });
+    mutate({ url: "/workspaces" });
+    setControlUpdateInstalledApps(Date.now());
+  };
 
   return (
     <>
       <button
         type="button"
         className="rounded-lg bg-blue-600 px-3 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+        }}
       >
         Join
       </button>
@@ -174,9 +201,12 @@ const JoinButton = () => {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false);
+                        handleAddToWorkspace();
+                      }}
                     >
-                      Request to join
+                      join
                     </button>
                   </div>
                 </Dialog.Panel>

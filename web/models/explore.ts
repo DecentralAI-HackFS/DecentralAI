@@ -28,3 +28,12 @@ export type InstalledApp = {
   uninstallable: boolean
   is_pinned: boolean
 }
+
+export type Dao = {
+  id: string
+  name: string
+  plan: string
+  status: string
+  created_at: number
+  current: any
+}
