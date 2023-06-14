@@ -170,8 +170,6 @@ services:
       # console or api domain.
       # example: http://udify.app
       APP_URL: ''
-    volumes:
-      - ./web/.env:/app/web/.env
 
   # The postgres database.
   db:
