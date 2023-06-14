@@ -332,6 +332,7 @@ const Main: FC<IMainProps> = ({
         chain: 'goerli',
         authSig,
         resourceId,
+        permanent: false
       });
     } catch (e) {
       notify({ type: 'error', message: 'You have no permission' })

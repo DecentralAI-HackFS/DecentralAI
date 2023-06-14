@@ -100,6 +100,7 @@ const SecretKeyModal = ({
           chain: 'goerli',
           authSig,
           resourceId,
+          permanent: false
         });
         // const jwt = await client.getSignedToken({
 

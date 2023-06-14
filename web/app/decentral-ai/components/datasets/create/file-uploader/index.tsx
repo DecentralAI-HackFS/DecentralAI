@@ -121,6 +121,7 @@ const FileUploader = ({ file, onFileUpdate }: IFileUploaderProps) => {
       symmetricKey,
       authSig,
       chain: "goerli",
+      permanent: false
     })
     // TODO save encryptedSymmetricKey to database
     const encryptedSymmetricKeyBase16 = LitJsSdk.uint8arrayToString(encryptedSymmetricKey, "base16")
