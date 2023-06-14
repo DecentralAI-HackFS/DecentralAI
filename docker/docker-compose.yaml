@@ -219,7 +219,7 @@ services:
 
   # Frontend web application.
   web:
-    image: ethanyeh01/decentral-ai-web:2.0.0
+    image: ethanyeh01/decentral-ai-web:2.0.1
     restart: always
     environment:
       EDITION: SELF_HOSTED
