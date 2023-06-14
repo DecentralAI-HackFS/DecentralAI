@@ -32,11 +32,6 @@ const menuData = [
     value: "proposals",
   },
   {
-    name: "Finance",
-    path: "#",
-    value: "finance",
-  },
-  {
     name: "Settings",
     path: "#",
     value: "settings",

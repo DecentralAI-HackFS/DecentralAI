@@ -1,26 +1,24 @@
 "use client";
-import { useWorkspacesContext } from "@/context/workspace-context";
+import useSWR from "swr";
 import {
   FolderIcon,
   ShoppingBagIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
+import { getOneDaoApp } from "@/service/dao";
 
 interface OverviewProps {
-  className?: string;
   params: { id: string };
 }
 
 const Overview = ({ params: { id } }: OverviewProps) => {
-  console.log("id", id);
-  const { workspaces } = useWorkspacesContext();
-  const currentWorkspace = workspaces.find((workspace) => workspace.current);
+  const { data } = useSWR({ id, action: "getOneDaoApp" }, getOneDaoApp);
 
   return (
     <div className="py-10 px-4">
       <div className="max-w-[48rem] mx-auto text-gray-900 space-y-10">
         <div className="border border-gray-200 rounded-md p-6">
-          <h3 className="text-3xl font-medium">{currentWorkspace?.name}</h3>
+          <h3 className="text-3xl font-medium">{data?.name}</h3>
           <p className="mt-3">
             Introducing FVMLearnMLDao: Empowering FVM Education through
             Collaboration and AI Guidance.

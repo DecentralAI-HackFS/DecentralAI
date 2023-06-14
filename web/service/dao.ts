@@ -16,6 +16,12 @@ export const getAllDaoApps: Fetcher<any, string> = () => {
   return get("/workspaces/all") as Promise<any>;
 };
 
+export const getOneDaoApp: Fetcher<any, {
+  id: string;
+}> = ({id}) => {
+  return get(`/workspaces/${id}`) as Promise<any>;
+};
+
 export const joinDaoApp: Fetcher<
   any,
   {

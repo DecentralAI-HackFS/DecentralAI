@@ -106,12 +106,11 @@ const Apps: FC = ({}) => {
   };
 
   const handleViewMore = async (appId: string) => {
-    await switchWorkspace({ url: `/workspaces/switch`, body: { tenant_id:appId } });
-    mutate({ url: "/workspaces" });
-    mutate({ url: "/apps", params: { page: 1, limit: 30 } });
-    mutate({ url: "/datasets", params: { page: 1, limit: 30 } })
-    router.push(`/decentral-ai/overview`);
-
+    // await switchWorkspace({ url: `/workspaces/switch`, body: { tenant_id:appId } });
+    // mutate({ url: "/workspaces" });
+    // mutate({ url: "/apps", params: { page: 1, limit: 30 } });
+    // mutate({ url: "/datasets", params: { page: 1, limit: 30 } })
+    router.push(`/decentral-ai/overview/${appId}`);
   }
 
   const [currApp, setCurrApp] = React.useState<App | null>(null);

@@ -2,7 +2,7 @@ import { switchWorkspace } from "@/service/common";
 import { useTranslation } from "react-i18next";
 import { useContext } from "use-context-selector";
 import { ToastContext } from "@/app/components/base/toast";
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 import { useWorkspacesContext } from "@/context/workspace-context";
 import NavItem from "./navItem";
 import { useSWRConfig } from "swr";
@@ -13,7 +13,7 @@ const WorkspaceNavItems = () => {
   const { notify } = useContext(ToastContext);
   const { workspaces } = useWorkspacesContext();
   const { mutate } = useSWRConfig();
-  const segment = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
   const handleSwitchWorkspace = async (tenant_id: string) => {
     try {
       await switchWorkspace({ url: `/workspaces/switch`, body: { tenant_id } });
@@ -37,7 +37,14 @@ const WorkspaceNavItems = () => {
       {workspaces.map((workspace) => (
         <NavItem
           active={
-            segment !== "dao" && segment !== "explore" && workspace.current
+            !(
+              segments?.[0] === "(daoLayout)" &&
+              segments?.[1] === "overview" &&
+              segments.length === 3
+            ) &&
+            segments[segments.length - 1] !== "dao" &&
+            segments[segments.length - 1] !== "explore" &&
+            workspace.current
           }
           onClick={() => {
             handleSwitchWorkspace(workspace.id);

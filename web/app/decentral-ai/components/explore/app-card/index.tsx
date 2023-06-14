@@ -8,7 +8,7 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import Button from "../../base/button";
 
 import s from "./style.module.css";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const CustomizeBtn = (
   <svg
@@ -34,12 +34,8 @@ export type AppCardProps = {
   onViewMore: (appId: string) => void;
 };
 
-const AppCard = ({
-  app,
-  onAddToWorkspace,
-  onViewMore
-}: AppCardProps) => {
-  const router = useRouter();
+const AppCard = ({ app, onAddToWorkspace, onViewMore }: AppCardProps) => {
+  // const router = useRouter();
   const { app: appBasicInfo } = app;
   return (
     <div className={s.wrap}>
@@ -64,20 +60,23 @@ const AppCard = ({
             <AppModeLabel mode={appBasicInfo.mode} />
           </div>
           <div className={cn(s.opWrap, "flex items-center w-full space-x-2")}>
-            <Button
+            {/* <Button
               type="primary"
               className="grow flex items-center !h-7"
               onClick={() => onAddToWorkspace(appBasicInfo.id)}
             >
               <PlusIcon className="w-4 h-4 mr-1" />
               <span className="text-xs">Join Dao</span>
-            </Button>
+            </Button> */}
+            {/* <div className="grow"></div> */}
             <Button
+              type="primary"
               className="flex grow items-center !h-7 space-x-1"
               onClick={() => onViewMore(appBasicInfo.id)}
             >
-              {CustomizeBtn}
-              <span className="text-xs">View More</span>
+              {/* {CustomizeBtn} */}
+              <PlusIcon className="w-4 h-4 mr-1" />
+              <span className="text-xs">Explore</span>
             </Button>
           </div>
         </div>

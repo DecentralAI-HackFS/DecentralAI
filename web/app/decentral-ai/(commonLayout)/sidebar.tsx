@@ -4,10 +4,22 @@ import { WorkspaceProvider } from "@/context/workspace-context";
 import NavItem from "./navItem";
 import WorkspaceNavItems from "./workspaceNavItems";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import {
+  useSelectedLayoutSegment,
+  useSelectedLayoutSegments,
+} from "next/navigation";
 
 const Sidebar = () => {
   const segment = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
+
+  const activeExplore =
+    segment === "explore" ||
+    (segments.length === 3 &&
+      segments?.[0] === "(daoLayout)" &&
+      segments?.[1] === "overview");
+  
+  
   return (
     <aside
       className="w-[60px] shrink-0 border-r border-gray-200"
@@ -32,7 +44,7 @@ const Sidebar = () => {
             </svg>
           </NavItem> */}
           <Link href="/decentral-ai/explore/apps">
-            <NavItem active={segment === "explore"}>
+            <NavItem active={activeExplore}>
               <svg
                 width={24}
                 height={24}
