@@ -2,7 +2,7 @@ version: '3.1'
 services:
   # API service
   api:
-    image: peggy120/decentral-ai-api:1.1.0
+    image: peggy120/decentral-ai-api:1.2.0
     restart: always
     environment:
       # Startup mode, 'api' starts the API server.
@@ -111,7 +111,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: peggy120/decentral-ai-api:1.1.0
+    image: peggy120/decentral-ai-api:1.2.0
     restart: always
     environment:
       # Startup mode, 'worker' starts the Celery worker for processing the queue.
@@ -158,7 +158,7 @@ services:
 
   # Frontend web application.
   web:
-    image: peggy120/decentral-ai-web:1.1.0
+    image: peggy120/decentral-ai-web:1.2.0
     restart: always
     environment:
       EDITION: SELF_HOSTED
