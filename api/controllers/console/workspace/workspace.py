@@ -4,7 +4,7 @@ import logging
 from flask import request
 from flask_login import login_required, current_user
 from flask_restful import Resource, fields, marshal_with, reqparse, marshal
-
+from werkzeug.exceptions import NotFound
 from controllers.console import api
 from controllers.console.setup import setup_required
 from controllers.console.error import AccountNotLinkTenantError
@@ -98,6 +98,20 @@ class TenantApi(Resource):
         return WorkspaceService.get_tenant_info(tenant), 200
 
 
+class TenantDetailApi(Resource):
+
+    @setup_required
+    @login_required
+    @account_initialization_required
+    @marshal_with(tenant_fields)
+    def get(self, workspace_id):
+        tenant = db.session.query(Tenant).filter_by(id=str(workspace_id)).first()
+        if not tenant:
+            raise NotFound("Workspace not found")
+
+        return WorkspaceService.get_tenant_info(tenant), 200
+
+
 class SwitchWorkspaceApi(Resource):
     @setup_required
     @login_required
@@ -120,6 +134,7 @@ class SwitchWorkspaceApi(Resource):
 
 api.add_resource(TenantAllApi, '/workspaces/all')  # GET for getting all tenants
 api.add_resource(TenantListApi, '/workspaces')  # GET for getting all tenants
+api.add_resource(TenantDetailApi, '/workspaces/<uuid:workspace_id>')
 api.add_resource(TenantApi, '/workspaces/current', endpoint='workspaces_current')  # GET for getting current tenant info
 api.add_resource(TenantApi, '/info', endpoint='info')  # Deprecated
 api.add_resource(SwitchWorkspaceApi, '/workspaces/switch')  # POST for switching tenant
