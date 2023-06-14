@@ -5,71 +5,112 @@ services:
     image: peggy120/decentral-ai-api:1.2.0
     restart: always
     environment:
-      # Server Edition
-      EDITION: SELF_HOSTED
-      # Your App secret key will be used for securely signing the session cookie
-      # Make sure you are changing this key for your deployment with a strong key.
-      # You can generate a strong key using `openssl rand -base64 42`.
-      # Alternatively you can set it with `SECRET_KEY` environment variable.
+      # Startup mode, 'api' starts the API server.
+      MODE: api
+      # The log level for the application. Supported values are `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`
+      LOG_LEVEL: INFO
+      # A secret key that is used for securely signing the session cookie and encrypting sensitive information on the database. You can generate a strong key using `openssl rand -base64 42`.
       SECRET_KEY: JyaZ3yTsIUF3KRpbB85lHWpW6zcF+pscilcdTiC8MYsrirs9xnezFAjP
-      # Console API base URL
-      CONSOLE_URL: http://127.0.0.1:5001
-      # Service API base URL
-      API_URL: http://127.0.0.1:5001
-      # Web APP base URL
-      APP_URL: http://127.0.0.1:3000
-      # celery configuration
-      CELERY_BROKER_URL: redis://:difyai123456@localhost:6379/1
-      # redis configuration
-      REDIS_HOST: localhost
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: difyai123456
-      REDIS_DB: 0
-      # PostgreSQL database configuration
+      # The base URL of console application, refers to the Console base URL of WEB service if console domain is
+      # different from api or web app domain.
+      # example: http://cloud.dify.ai
+      CONSOLE_URL: 'https://decentralai.us'
+      # The URL for Service API endpoints，refers to the base URL of the current API service if api domain is
+      # different from console domain.
+      # example: http://api.dify.ai
+      API_URL: 'https://decentralai.us'
+      # The URL for Web APP, refers to the Web App base URL of WEB service if web app domain is different from
+      # console or api domain.
+      # example: http://udify.app
+      APP_URL: 'https://decentralai.us'
+      # When enabled, migrations will be executed prior to application startup and the application will start after the migrations have completed.
+      MIGRATION_ENABLED: 'true'
+      # The configurations of postgres database connection.
+      # It is consistent with the configuration in the 'db' service below.
       DB_USERNAME: postgres
       DB_PASSWORD: difyai123456
-      DB_HOST: localhost
+      DB_HOST: db
       DB_PORT: 5432
       DB_DATABASE: dify
-      # Storage configuration
-      # use for store upload files, private keys...
-      # storage type: local, s3, web3.storage
+      # The configurations of redis connection.
+      # It is consistent with the configuration in the 'redis' service below.
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_USERNAME: ''
+      REDIS_PASSWORD: difyai123456
+      REDIS_USE_SSL: 'false'
+      # use redis db 0 for redis cache
+      REDIS_DB: 0
+      # The configurations of session, Supported values are `sqlalchemy`. `redis`
+      SESSION_TYPE: redis
+      SESSION_REDIS_HOST: redis
+      SESSION_REDIS_PORT: 6379
+      SESSION_REDIS_USERNAME: ''
+      SESSION_REDIS_PASSWORD: difyai123456
+      SESSION_REDIS_USE_SSL: 'false'
+      # use redis db 2 for session store
+      SESSION_REDIS_DB: 2
+      # The configurations of celery broker.
+      # Use redis as the broker, and redis db 1 for celery broker.
+      CELERY_BROKER_URL: redis://:difyai123456@redis:6379/1
+      # Specifies the allowed origins for cross-origin requests to the Web API, e.g. https://dify.app or * for all origins.
+      WEB_API_CORS_ALLOW_ORIGINS: '*'
+      # Specifies the allowed origins for cross-origin requests to the console API, e.g. https://cloud.dify.ai or * for all origins.
+      CONSOLE_CORS_ALLOW_ORIGINS: '*'
+      # CSRF Cookie settings
+      # Controls whether a cookie is sent with cross-site requests,
+      # providing some protection against cross-site request forgery attacks
+      #
+      # Default: `SameSite=Lax, Secure=false, HttpOnly=true`
+      # This default configuration supports same-origin requests using either HTTP or HTTPS,
+      # but does not support cross-origin requests. It is suitable for local debugging purposes.
+      #
+      # If you want to enable cross-origin support,
+      # you must use the HTTPS protocol and set the configuration to `SameSite=None, Secure=true, HttpOnly=true`.
+      #
+      # For **production** purposes, please set `SameSite=Lax, Secure=true, HttpOnly=true`.
+      COOKIE_HTTPONLY: 'true'
+      COOKIE_SAMESITE: 'None'
+      COOKIE_SECURE: 'true'
+      # The type of storage to use for storing user files. Supported values are `local` and `s3`, Default: `local`
       STORAGE_TYPE: local
+      # The path to the local storage directory, the directory relative the root path of API service codes or absolute path. Default: `storage` or `/home/john/storage`.
+      # only available when STORAGE_TYPE is `local`.
       STORAGE_LOCAL_PATH: storage
+      # The S3 storage configurations, only available when STORAGE_TYPE is `s3`.
       S3_ENDPOINT: https://your-bucket-name.storage.s3.clooudflare.com
       S3_BUCKET_NAME: your-bucket-name
       S3_ACCESS_KEY: your-access-key
       S3_SECRET_KEY: your-secret-key
       S3_REGION: your-region
+      # The type of vector store to use. Supported values are `weaviate`, `qdrant`.
+      VECTOR_STORE: weaviate
+      # The Weaviate endpoint URL. Only available when VECTOR_STORE is `weaviate`.
+      WEAVIATE_ENDPOINT: http://weaviate:8080
+      # The Weaviate API key.
+      WEAVIATE_API_KEY: WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih
+      # The Qdrant endpoint URL. Only available when VECTOR_STORE is `qdrant`.
+      QDRANT_URL: path:storage/qdrant
+      # The Qdrant API key.
+      QDRANT_API_KEY: your-qdrant-api-key
+      # The DSN for Sentry error reporting. If not set, Sentry error reporting will be disabled.
+      SENTRY_DSN: ''
+      # The sample rate for Sentry events. Default: `1.0`
+      SENTRY_TRACES_SAMPLE_RATE: 1.0
+      # The sample rate for Sentry profiles. Default: `1.0`
+      SENTRY_PROFILES_SAMPLE_RATE: 1.0
+      # .env
+      # Server Edition
+      EDITION: SELF_HOSTED
+      # Storage configuration
+      # use for store upload files, private keys...
+      # storage type: local, s3, web3.storage
       WEB3_STORAGE_API_KEY: your-web3-storage-api-key
-      # CORS configuration
-      WEB_API_CORS_ALLOW_ORIGINS: http://127.0.0.1:3000,*
-      CONSOLE_CORS_ALLOW_ORIGINS: http://127.0.0.1:3000,*
-      # Cookie configuration
-      COOKIE_HTTPONLY: true
-      COOKIE_SAMESITE: None
-      COOKIE_SECURE: true
       # Session configuration
       SESSION_PERMANENT: true
       SESSION_USE_SIGNER: true
-      ## support redis, sqlalchemy
-      SESSION_TYPE: redis
-      # session redis configuration
-      SESSION_REDIS_HOST: localhost
-      SESSION_REDIS_PORT: 6379
-      SESSION_REDIS_PASSWORD: difyai123456
-      SESSION_REDIS_DB: 2
       # Vector database configuration, support: weaviate, qdrant
-      VECTOR_STORE: weaviate
-      # Weaviate configuration
-      WEAVIATE_ENDPOINT: http://localhost:8080
-      WEAVIATE_API_KEY: WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih
       WEAVIATE_GRPC_ENABLED: false
-      # Qdrant configuration, use `path:` prefix for local mode or `https://your-qdrant-cluster-url.qdrant.io` for remote mode
-      QDRANT_URL: path:storage/qdrant
-      QDRANT_API_KEY: your-qdrant-api-key
-      # Sentry configuration
-      SENTRY_DSN: 
       # DEBUG
       DEBUG: false
       SQLALCHEMY_ECHO: false
@@ -88,37 +129,49 @@ services:
     image: peggy120/decentral-ai-api:1.2.0
     restart: always
     environment:
-    # Server Edition
-      EDITION: SELF_HOSTED
-      # Your App secret key will be used for securely signing the session cookie
-      # Make sure you are changing this key for your deployment with a strong key.
-      # You can generate a strong key using `openssl rand -base64 42`.
-      # Alternatively you can set it with `SECRET_KEY` environment variable.
+      # Startup mode, 'worker' starts the Celery worker for processing the queue.
+      MODE: worker
+      # --- All the configurations below are the same as those in the 'api' service. ---
+      # The log level for the application. Supported values are `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`
+      LOG_LEVEL: INFO
+      # A secret key that is used for securely signing the session cookie and encrypting sensitive information on the database. You can generate a strong key using `openssl rand -base64 42`.
+      # same as the API service
       SECRET_KEY: JyaZ3yTsIUF3KRpbB85lHWpW6zcF+pscilcdTiC8MYsrirs9xnezFAjP
-      # Console API base URL
-      CONSOLE_URL: http://127.0.0.1:5001
-      # Service API base URL
-      API_URL: http://127.0.0.1:5001
-      # Web APP base URL
-      APP_URL: http://127.0.0.1:3000
-      # celery configuration
-      CELERY_BROKER_URL: redis://:difyai123456@localhost:6379/1
-      # redis configuration
-      REDIS_HOST: localhost
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: difyai123456
-      REDIS_DB: 0
-      # PostgreSQL database configuration
+      # The configurations of postgres database connection.
+      # It is consistent with the configuration in the 'db' service below.
       DB_USERNAME: postgres
       DB_PASSWORD: difyai123456
-      DB_HOST: localhost
+      DB_HOST: db
       DB_PORT: 5432
       DB_DATABASE: dify
+      # The configurations of redis cache connection.
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_USERNAME: ''
+      REDIS_PASSWORD: difyai123456
+      REDIS_DB: 0
+      REDIS_USE_SSL: 'false'
+      # The configurations of celery broker.
+      CELERY_BROKER_URL: redis://:difyai123456@redis:6379/1
+      # The type of storage to use for storing user files. Supported values are `local` and `s3`, Default: `local`
+      STORAGE_TYPE: local
+      STORAGE_LOCAL_PATH: storage
+      # The Vector store configurations.
+      VECTOR_STORE: weaviate
+      WEAVIATE_ENDPOINT: http://weaviate:8080
+      WEAVIATE_API_KEY: WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih
+      # .env
+      # Server Edition
+      EDITION: SELF_HOSTED
+      # Console API base URL
+      CONSOLE_URL: https://decentralai.us
+      # Service API base URL
+      API_URL: https://decentralai.us
+      # Web APP base URL
+      APP_URL: https://decentralai.us
       # Storage configuration
       # use for store upload files, private keys...
       # storage type: local, s3, web3.storage
-      STORAGE_TYPE: local
-      STORAGE_LOCAL_PATH: storage
       S3_ENDPOINT: https://your-bucket-name.storage.s3.clooudflare.com
       S3_BUCKET_NAME: your-bucket-name
       S3_ACCESS_KEY: your-access-key
@@ -126,27 +179,26 @@ services:
       S3_REGION: your-region
       WEB3_STORAGE_API_KEY: your-web3-storage-api-key
       # CORS configuration
-      WEB_API_CORS_ALLOW_ORIGINS: http://127.0.0.1:3000,*
-      CONSOLE_CORS_ALLOW_ORIGINS: http://127.0.0.1:3000,*
+      WEB_API_CORS_ALLOW_ORIGINS: '*'
+      CONSOLE_CORS_ALLOW_ORIGINS: '*'
       # Cookie configuration
-      COOKIE_HTTPONLY: true
-      COOKIE_SAMESITE: None
-      COOKIE_SECURE: true
+      COOKIE_HTTPONLY: 'true'
+      COOKIE_SAMESITE: 'None'
+      COOKIE_SECURE: 'true'
       # Session configuration
       SESSION_PERMANENT: true
       SESSION_USE_SIGNER: true
       ## support redis, sqlalchemy
       SESSION_TYPE: redis
       # session redis configuration
-      SESSION_REDIS_HOST: localhost
+      SESSION_REDIS_HOST: redis
       SESSION_REDIS_PORT: 6379
+      SESSION_REDIS_USERNAME: ''
       SESSION_REDIS_PASSWORD: difyai123456
+      SESSION_REDIS_USE_SSL: 'false'
+      # use redis db 2 for session store
       SESSION_REDIS_DB: 2
-      # Vector database configuration, support: weaviate, qdrant
-      VECTOR_STORE: weaviate
       # Weaviate configuration
-      WEAVIATE_ENDPOINT: http://localhost:8080
-      WEAVIATE_API_KEY: WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih
       WEAVIATE_GRPC_ENABLED: false
       # Qdrant configuration, use `path:` prefix for local mode or `https://your-qdrant-cluster-url.qdrant.io` for remote mode
       QDRANT_URL: path:storage/qdrant
