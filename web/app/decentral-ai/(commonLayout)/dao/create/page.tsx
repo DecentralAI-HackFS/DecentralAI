@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { createDao } from "@/service/dao";
 import { useRouter } from "next/navigation";
 import { DaoFormData } from "./model/daoForm";
+import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 
 
 const DaoCreation = () => {
@@ -22,6 +23,28 @@ const DaoCreation = () => {
     watch,
     formState: { errors },
   } = useForm<DaoFormData>();
+  const { address} = useAccount();
+  const { config } = usePrepareContractWrite({
+    address: "0x9604c01A49d922948E165cdFc6c52D5705c7fD20",
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
+        ],
+        name: "safeMint",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+    ],
+    functionName: "safeMint",
+    args: [address!],
+  });
+  const { writeAsync } = useContractWrite(config);
 
   const steps = useMemo(() => {
     const tempSteps = [
@@ -49,7 +72,8 @@ const DaoCreation = () => {
     });
   }, [step]);
 
-  const handleCreateNewDao = (data: DaoFormData) => {
+  const handleCreateNewDao = async (data: DaoFormData) => {
+    await writeAsync!();
     createDao({ daoName: data.daoName }).then((res: any) => {
       if (res.result === "success") {
         router.push(`/decentral-ai/apps`);
