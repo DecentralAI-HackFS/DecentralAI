@@ -36,8 +36,11 @@ class MemberListApi(Resource):
     @account_initialization_required
     @marshal_with(account_list_fields)
     def get(self):
-        members = TenantService.get_tenant_members(current_user.current_tenant)
-        return {'result': 'success', 'accounts': members}, 200
+        if current_user.current_tenant is None:
+            return {'result': 'success', 'accounts': []}, 200
+        else:
+            members = TenantService.get_tenant_members(current_user.current_tenant)
+            return {'result': 'success', 'accounts': members}, 200
 
 class MemberJoinApi(Resource):
 
