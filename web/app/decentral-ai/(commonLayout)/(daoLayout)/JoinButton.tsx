@@ -9,7 +9,9 @@ import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import ExploreContext from "@/context/explore-context";
 import { useContext } from "use-context-selector";
-import { usePrepareContractWrite, useContractWrite, useAccount } from 'wagmi'
+
+import { usePrepareContractWrite, useContractWrite, useAccount } from "wagmi";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 const mailingLists = [
   {
@@ -40,6 +42,8 @@ const mailingLists = [
 ];
 
 const JoinButton = () => {
+  const segments = useSelectedLayoutSegments();
+  const id = segments?.[segments.length - 1];
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [selectedMailingLists, setSelectedMailingLists] = useState(
@@ -49,37 +53,36 @@ const JoinButton = () => {
   const { workspaces } = useWorkspacesContext();
   const currentWorkspace = workspaces.filter((item) => item.current)?.[0];
   const { setControlUpdateInstalledApps } = useContext(ExploreContext);
-  const { address, isConnecting, isDisconnected } = useAccount()
+  const { address, isConnecting, isDisconnected } = useAccount();
   if (!address) {
-    return <></>
+    return <></>;
   }
   const { config } = usePrepareContractWrite({
-    address: '0x9604c01A49d922948E165cdFc6c52D5705c7fD20',
+    address: "0x9604c01A49d922948E165cdFc6c52D5705c7fD20",
     abi: [
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "address",
-            "name": "to",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
         ],
-        "name": "safeMint",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        name: "safeMint",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
       },
     ],
-    functionName: 'safeMint',
+    functionName: "safeMint",
     args: [address!],
-  })
-  const { writeAsync } = useContractWrite(config)
+  });
+  const { writeAsync } = useContractWrite(config);
 
   const handleAddToWorkspace = async () => {
-    await writeAsync!()
-    await joinDaoApp({ daoId: currentWorkspace.id, role: "admin" });
-    
-   
+    await writeAsync!();
+    await joinDaoApp({ daoId: id, role: "admin" });
+
     Toast.notify({
       type: "success",
       message: t("common.api.success"),
