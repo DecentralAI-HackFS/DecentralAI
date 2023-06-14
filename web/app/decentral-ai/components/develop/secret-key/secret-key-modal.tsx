@@ -81,12 +81,12 @@ const SecretKeyModal = ({
         role: "",
         extraData: "",
       };
-      const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'mumbai' })
+      const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'goerli' })
         const accessControlConditions = [
           {
-            contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
+            contractAddress: "0x9604c01A49d922948E165cdFc6c52D5705c7fD20",
             standardContractType: "ERC721",
-            chain: 'mumbai',
+            chain: 'goerli',
             method: "balanceOf",
             parameters: [":userAddress"],
             returnValueTest: {
@@ -97,13 +97,13 @@ const SecretKeyModal = ({
         ];
         await client.saveSigningCondition({
           accessControlConditions,
-          chain: 'mumbai',
+          chain: 'goerli',
           authSig,
           resourceId,
         });
         // const jwt = await client.getSignedToken({
 
-        //   accessControlConditions, chain: 'mumbai', authSig, resourceId
+        //   accessControlConditions, chain: 'goerli', authSig, resourceId
         // })
         // console.log('jwt', jwt)
         const res = await createApikey({ url: `/apps/${appId}/api-keys`, body: {} })

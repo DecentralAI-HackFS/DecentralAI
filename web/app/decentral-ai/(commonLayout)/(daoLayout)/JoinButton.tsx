@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import ExploreContext from "@/context/explore-context";
 import { useContext } from "use-context-selector";
+import { usePrepareContractWrite, useContractWrite, useAccount } from 'wagmi'
 
 const mailingLists = [
   {
@@ -48,9 +49,37 @@ const JoinButton = () => {
   const { workspaces } = useWorkspacesContext();
   const currentWorkspace = workspaces.filter((item) => item.current)?.[0];
   const { setControlUpdateInstalledApps } = useContext(ExploreContext);
+  const { address, isConnecting, isDisconnected } = useAccount()
+  if (!address) {
+    return <></>
+  }
+  const { config } = usePrepareContractWrite({
+    address: '0x9604c01A49d922948E165cdFc6c52D5705c7fD20',
+    abi: [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          }
+        ],
+        "name": "safeMint",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+    ],
+    functionName: 'safeMint',
+    args: [address!],
+  })
+  const { writeAsync } = useContractWrite(config)
 
   const handleAddToWorkspace = async () => {
-    await joinDaoApp({ daoId: currentWorkspace.id, role: "normal" });
+    await writeAsync!()
+    await joinDaoApp({ daoId: currentWorkspace.id, role: "admin" });
+    
+   
     Toast.notify({
       type: "success",
       message: t("common.api.success"),
@@ -200,6 +229,7 @@ const JoinButton = () => {
                   <div className="mt-5 sm:mt-6">
                     <button
                       type="button"
+                      disabled={!writeAsync}
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       onClick={() => {
                         setOpen(false);

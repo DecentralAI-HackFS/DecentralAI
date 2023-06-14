@@ -98,16 +98,16 @@ const FileUploader = ({ file, onFileUpdate }: IFileUploaderProps) => {
     setUploading(true)
     // @ts-ignore
     const client = window.litNodeClient
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: "mumbai" });
+    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: "goerli" });
     const {symmetricKey,encryptedFile}  = await LitJsSdk.encryptFile({
       // @ts-ignore
       file,
     })
     const accessControlConditions = [
       {
-        contractAddress: "0xAB74BC188fA50299677b8eCEa7F5D24c79b2dF18",
+        contractAddress: "0x9604c01A49d922948E165cdFc6c52D5705c7fD20",
         standardContractType: "ERC721",
-        chain: 'mumbai',
+        chain: 'goerli',
         method: "balanceOf",
         parameters: [":userAddress"],
         returnValueTest: {
@@ -120,7 +120,7 @@ const FileUploader = ({ file, onFileUpdate }: IFileUploaderProps) => {
       accessControlConditions,
       symmetricKey,
       authSig,
-      chain: "mumbai",
+      chain: "goerli",
     })
     // TODO save encryptedSymmetricKey to database
     const encryptedSymmetricKeyBase16 = LitJsSdk.uint8arrayToString(encryptedSymmetricKey, "base16")
