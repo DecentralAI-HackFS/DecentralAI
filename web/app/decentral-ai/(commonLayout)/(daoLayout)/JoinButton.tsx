@@ -239,7 +239,7 @@ const JoinButton = () => {
                         handleAddToWorkspace();
                       }}
                     >
-                      join
+                      Mint & Join
                     </button>
                   </div>
                 </Dialog.Panel>
