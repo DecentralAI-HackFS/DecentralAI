@@ -75,9 +75,9 @@ const SecretKeyModal = ({
       // @ts-ignore
       const client = window.litNodeClient;
       const resourceId = {
-        baseUrl: "localhost:3000",
+        baseUrl: "https://decentralai.us/",
         path: "/app",
-        orgId: "",
+        orgId: "decentralai",
         role: "",
         extraData: "",
       };

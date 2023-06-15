@@ -307,9 +307,9 @@ const Main: FC<IMainProps> = ({
       console.log('client', client)
       console.log('LitJsSdk', LitJsSdk)
       const resourceId = {
-        baseUrl: "localhost:3000",
+        baseUrl: "https://decentralai.us/",
         path: "/chat",
-        orgId: "",
+        orgId: "decentralai",
         role: "",
         extraData: "",
       };
