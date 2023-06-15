@@ -69,7 +69,7 @@ const DocumentDetail: FC<Props> = ({ datasetId, documentId }) => {
   }, apiParams => fetchDocumentDetail(omit(apiParams, 'action')))
 
   const backToPrev = () => {
-    router.push(`/datasets/${datasetId}/documents`)
+    router.push(`/decentral-ai/datasets/${datasetId}/documents`)
   }
 
   const isDetailLoading = !documentDetail && !error
