@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import { fetchAppList } from "@/service/apps";
 import { NEED_REFRESH_APP_LIST_KEY } from "@/config";
 import { useTranslation } from "react-i18next";
-import NewAppCard from "@/app/(commonLayout)/apps/NewAppCard";
 import AppCard from "./AppCard";
 import useSWR from "swr";
+import NewAppCard from "./NewAppCard";
 
 const Apps = () => {
   const { t } = useTranslation();
