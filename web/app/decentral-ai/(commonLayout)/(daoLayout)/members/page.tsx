@@ -33,7 +33,7 @@ const Members = () => {
         <div className="mt-6">
           <div className="flex items-center py-[7px] border-b border-gray-200">
             <div className="grow px-3 text-xs font-medium text-gray-500">
-              {t("common.members.name")}
+              ADDRESS
             </div>
             <div className="shrink-0 w-[104px] text-xs font-medium text-gray-500">
               {t("common.members.lastActive")}
