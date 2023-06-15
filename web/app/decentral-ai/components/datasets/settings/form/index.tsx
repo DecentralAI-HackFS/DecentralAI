@@ -97,10 +97,10 @@ const Form = ({
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
-          <a className='flex items-center h-[18px] px-3 text-xs text-gray-500' href="https://docs.dify.ai/advanced/datasets#how-to-write-a-good-dataset-description" target='_blank'>
+          {/* <a className='flex items-center h-[18px] px-3 text-xs text-gray-500' href="https://docs.dify.ai/advanced/datasets#how-to-write-a-good-dataset-description" target='_blank'>
             <BookOpenIcon className='w-3 h-[18px] mr-1' />
             {t('datasetSettings.form.descWrite')}
-          </a>
+          </a> */}
         </div>
       </div>
       <div className={rowClass}>

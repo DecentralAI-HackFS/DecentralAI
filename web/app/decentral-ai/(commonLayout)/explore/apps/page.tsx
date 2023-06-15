@@ -50,7 +50,7 @@ const Apps: FC = ({}) => {
             app_id: item.id,
             description: "",
             copyright: "Copyright 2023 DecentralAI",
-            privacy_policy: "https://dify.ai",
+            privacy_policy: "#",
             category: "Dao",
             // position: 3,
             is_listed: true,
@@ -61,37 +61,7 @@ const Apps: FC = ({}) => {
         })
       );
     }
-    // (async () => {
-      // const res = await getAllDaoApps("getAllDaoApps");
-      // console.log("getAllDaoApps", res);
-      // const { categories, recommended_apps }: any = mockExploreApps;
-      // setCategories(categories);
-      // setAllList(recommended_apps);
-      // setAllList(
-      //   response.workspaces.map((item: Dao) => {
-      //     return {
-      //       app: {
-      //         id: item.id,
-      //         name: item.name,
-      //         mode: "chat",
-      //         icon: "🤖",
-      //         icon_background: "#FFEAD5",
-      //       },
-      //       app_id: item.id,
-      //       description: "",
-      //       copyright: "Copyright 2023 DecentralAI",
-      //       privacy_policy: "https://dify.ai",
-      //       category: "Dao",
-      //       // position: 3,
-      //       is_listed: true,
-      //       // install_count: 49,
-      //       installed: false,
-      //       editable: true,
-      //     };
-      //   })
-      // );
-      // setIsLoaded(true);
-    // })();
+
   }, [response]);
 
   const handleAddToWorkspace = async (appId: string) => {

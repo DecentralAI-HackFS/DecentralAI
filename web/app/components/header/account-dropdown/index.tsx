@@ -85,7 +85,7 @@ export default function AppSelector({ userProfile, onLogout, langeniusVersionInf
                   <div>{t('common.userProfile.settings')}</div>
                 </div>
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 <Link
                   className={classNames(itemClassName, 'group justify-between')}
                   href={
@@ -95,7 +95,7 @@ export default function AppSelector({ userProfile, onLogout, langeniusVersionInf
                   <div>{t('common.userProfile.helpCenter')}</div>
                   <ArrowTopRightOnSquareIcon className='hidden w-4 h-4 group-hover:flex' />
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 <div className={classNames(itemClassName, 'justify-between')} onClick={() => setAboutVisible(true)}>
                   <div>{t('common.userProfile.about')}</div>

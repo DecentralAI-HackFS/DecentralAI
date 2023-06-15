@@ -127,17 +127,17 @@ const InstallForm = () => {
             <div className="block mt-6 text-xs text-gray-600">
               {t('login.tosDesc')}
               &nbsp;
-              <Link
+              <a
                 className='text-primary-600'
-                target={'_blank'}
-                href='https://docs.dify.ai/user-agreement/terms-of-service'
-              >{t('login.tos')}</Link>
+                // target={'_blank'}
+                href='#'
+              >{t('login.tos')}</a>
               &nbsp;&&nbsp;
-              <Link
+              <a
                 className='text-primary-600'
-                target={'_blank'}
-                href='https://langgenius.ai/privacy-policy'
-              >{t('login.pp')}</Link>
+                // target={'_blank'}
+                href='#'
+              >{t('login.pp')}</a>
             </div>
 
             <div>

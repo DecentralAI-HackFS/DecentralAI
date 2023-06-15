@@ -314,21 +314,21 @@ const NormalForm = () => {
           <div className="block mt-6 text-xs text-gray-600">
             {t("login.tosDesc")}
             &nbsp;
-            <Link
+            <a
               className="text-primary-600"
-              target={"_blank"}
-              href="https://docs.dify.ai/user-agreement/terms-of-service"
+              // target={"_blank"}
+              href="#"
             >
               {t("login.tos")}
-            </Link>
+            </a>
             &nbsp;&&nbsp;
-            <Link
+            <a
               className="text-primary-600"
-              target={"_blank"}
-              href="https://docs.dify.ai/user-agreement/privacy-policy"
+              // target={"_blank"}
+              href="#"
             >
               {t("login.pp")}
-            </Link>
+            </a>
           </div>
         </div>
       </div>
