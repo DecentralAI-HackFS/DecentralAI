@@ -70,6 +70,15 @@ export const EditBtn = ({ className, onClick }: { className?: string, onClick: (
 }
 
 export const FootLogo = () => (
-  <div className={s.logo} />
-)
+  <div className="flex items-center">
+    <img
+      src="https://flowbite.com/docs/images/logo.svg"
+      className="h-5 mr-2"
+      alt="DecentralAI Logo"
+    />
+    <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+      DecentralAI
+    </span>
+  </div>
+);
 

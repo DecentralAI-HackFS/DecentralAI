@@ -40,7 +40,7 @@ const MembersPage = () => {
     <>
       <div>
         <div className='flex items-center mb-4 p-3 bg-gray-50 rounded-2xl'>
-          <div className={cn(s['logo-icon'], 'shrink-0')}></div>
+          {/* <div className={cn(s['logo-icon'], 'shrink-0')}></div> */}
           <div className='grow mx-2'>
             <div className='text-sm font-medium text-gray-900'>{currentWrokspace.name}</div>
             <div className='text-xs text-gray-500'>{t('common.userProfile.workspace')}</div>

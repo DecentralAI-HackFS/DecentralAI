@@ -122,9 +122,9 @@ export default function AppSelector({ userProfile, onLogout, langeniusVersionInf
       {
         settingVisible && <AccountSetting onCancel={() => setSettingVisible(false)} />
       }
-      {
+      {/* {
         aboutVisible && <AccountAbout onCancel={() => setAboutVisible(false)} langeniusVersionInfo={langeniusVersionInfo} />
-      }
+      } */}
     </div >
   )
 }

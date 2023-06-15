@@ -32,10 +32,10 @@ export default function AccountAbout({
       <div className='relative'>
         <XMarkIcon className='absolute top-0 -right-2 w-4 h-4 cursor-pointer' onClick={onCancel} />
         <div>
-          <div className={classNames(
+          {/* <div className={classNames(
             s['logo-icon'],
             'mx-auto mb-3 w-12 h-12 bg-white rounded border border-gray-200',
-          )} />
+          )} /> */}
           <div className={classNames(
             s['logo-text'],
             'mx-auto mb-2',
