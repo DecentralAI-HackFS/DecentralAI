@@ -26,6 +26,7 @@ import { SuggestedQuestionsAfterAnswerConfig } from '@/models/debug'
 import { InstalledApp } from '@/models/explore'
 import * as LitJsSdk from "@lit-protocol/lit-node-client";
 import s from './style.module.css'
+import { v4 as uuidv4 } from 'uuid';
 
 export type IMainProps = {
   isInstalledApp?: boolean,
@@ -302,6 +303,7 @@ const Main: FC<IMainProps> = ({
 
   const checkCanSend = async() => {
     try {
+    
       // @ts-ignore
       const client = window.litNodeClient;
       console.log('client', client)
@@ -311,7 +313,7 @@ const Main: FC<IMainProps> = ({
         path: "/chat",
         orgId: "decentralai",
         role: "",
-        extraData: "",
+        extraData: uuidv4(),
       };
       const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'goerli' })
       const accessControlConditions = [
@@ -332,7 +334,7 @@ const Main: FC<IMainProps> = ({
         chain: 'goerli',
         authSig,
         resourceId,
-        permanent: false
+        // permanent: false
       });
     } catch (e) {
       notify({ type: 'error', message: 'You have no permission' })

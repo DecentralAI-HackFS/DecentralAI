@@ -20,6 +20,7 @@ import { useContext } from 'use-context-selector'
 import I18n from '@/context/i18n'
 import { ToastContext } from '@/app/components/base/toast'
 import * as LitJsSdk from "@lit-protocol/lit-node-client";
+import { v4 as uuidv4 } from 'uuid';
 
 type ISecretKeyModalProps = {
   isShow: boolean
@@ -79,7 +80,7 @@ const SecretKeyModal = ({
         path: "/app",
         orgId: "decentralai",
         role: "",
-        extraData: "",
+        extraData: uuidv4(),
       };
       const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: 'goerli' })
         const accessControlConditions = [
@@ -100,7 +101,7 @@ const SecretKeyModal = ({
           chain: 'goerli',
           authSig,
           resourceId,
-          permanent: false
+          // permanent: false
         });
         // const jwt = await client.getSignedToken({
 
