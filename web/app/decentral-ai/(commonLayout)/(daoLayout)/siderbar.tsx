@@ -13,7 +13,7 @@ const menuData = [
   },
   {
     name: "Members",
-    path: "/decentral-ai/overview",
+    path: "/decentral-ai/members",
     value: "members",
   },
   {
