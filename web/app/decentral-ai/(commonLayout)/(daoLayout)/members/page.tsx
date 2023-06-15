@@ -4,11 +4,17 @@ import Operation from "@/app/decentral-ai/components/header/account-setting/memb
 import { useAppContext } from "@/context/app-context";
 import { fetchMembers } from "@/service/common";
 import dayjs from "dayjs";
+import 'dayjs/locale/zh-cn';
+import { useContext } from "use-context-selector";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
+import I18n from "@/context/i18n";
+import relativeTime from 'dayjs/plugin/relativeTime'
 
+dayjs.extend(relativeTime)
 const Members = () => {
   const { t } = useTranslation();
+  const { locale } = useContext(I18n);
   const RoleMap = {
     owner: t("common.members.owner"),
     admin: t("common.members.admin"),
@@ -70,7 +76,7 @@ const Members = () => {
                   {dayjs(
                     Number(account.last_login_at || account.created_at) * 1000
                   )
-                    .locale("en")
+                    .locale(locale === "zh-Hans" ? "zh-cn" : "en")
                     .fromNow()}
                 </div>
                 <div className="shrink-0 w-[96px] flex items-center">
