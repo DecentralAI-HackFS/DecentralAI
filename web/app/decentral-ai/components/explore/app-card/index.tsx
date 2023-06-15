@@ -39,7 +39,7 @@ const AppCard = ({ app, onAddToWorkspace, onViewMore }: AppCardProps) => {
   const { app: appBasicInfo } = app;
   return (
     <div className={s.wrap}>
-      <div className="col-span-1 bg-white border-2 border-solid border-transparent rounded-lg shadow-sm min-h-[160px] flex flex-col transition-all duration-200 ease-in-out cursor-pointer hover:shadow-lg">
+      <div className="col-span-1 bg-white border-2 border-solid border-transparent rounded-lg shadow-sm min-h-[160px] flex flex-col transition-all duration-200 ease-in-out hover:shadow-lg">
         <div className="flex pt-[14px] px-[14px] pb-3 h-[66px] items-center gap-3 grow-0 shrink-0">
           <AppIcon
             size="small"
@@ -56,10 +56,10 @@ const AppCard = ({ app, onAddToWorkspace, onViewMore }: AppCardProps) => {
           {app.description}
         </div>
         <div className="flex items-center flex-wrap min-h-[42px] px-[14px] pt-2 pb-[10px]">
-          <div className={s.mode}>
+          {/* <div className={s.mode}>
             <AppModeLabel mode={appBasicInfo.mode} />
-          </div>
-          <div className={cn(s.opWrap, "flex items-center w-full space-x-2")}>
+          </div> */}
+          <div className={cn( "flex items-center w-full space-x-2")}>
             {/* <Button
               type="primary"
               className="grow flex items-center !h-7"
