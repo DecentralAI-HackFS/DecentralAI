@@ -1,9 +1,14 @@
 "use client";
 
-import { useSelectedLayoutSegment } from "next/navigation";
+import {
+  useSelectedLayoutSegment,
+  useSelectedLayoutSegments,
+} from "next/navigation";
 import Menu from "../menu";
 import { useWorkspacesContext } from "@/context/workspace-context";
 import JoinButton from "./JoinButton";
+import useSWR from "swr";
+import { getOneDaoApp } from "@/service/dao";
 
 const menuData = [
   {
@@ -40,6 +45,7 @@ const menuData = [
 
 const Sidebar = () => {
   const segment = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
   const { workspaces } = useWorkspacesContext();
   const currentWorkspace = workspaces.find((workspace) => workspace.current);
   const activeValue =
@@ -49,11 +55,20 @@ const Sidebar = () => {
       })?.value) ??
     undefined;
 
+  let id;
+  if (segments?.[0] === "overview" && segments?.[1]) {
+    id = segments[1];
+  }
+  
+  const { data } = useSWR(
+    id ? { id, action: "getOneDaoApp" } : null,
+    getOneDaoApp
+  );
   return (
     <aside className="h-full" aria-label="Sidebar">
       <div className="box-border h-[52px] border-b border-gray-200 flex items-center px-4">
         <p className="text-lg font-medium text-gray-800 truncate">
-          {currentWorkspace?.name}
+          {data?.name || currentWorkspace?.name}
         </p>
       </div>
       <div>
