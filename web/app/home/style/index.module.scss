@@ -1,0 +1,19 @@
+.title {
+  background: linear-gradient(180deg, #a642f5 0%, #4c83f6 69.23%, #ffffff 120.83%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.tab:hover {
+  border-bottom: 5px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, #a642f5, #01abff);
+}
+
+.tab.active {
+  border-bottom: 5px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, #a642f5, #01abff);
+}
