@@ -19,11 +19,11 @@ const Header = () => {
       <div className="flex flex-wrap items-center justify-between mx-auto p-3">
         <a href="#" className="flex items-center">
           <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-6 mr-3"
-            alt="Flowbite Logo"
+            src="/images/common/logo.png"
+            className="h-6 mr-2 object-contain"
+            alt="DecentralAI Logo"
           />
-          <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             DecentralAI
           </span>
         </a>

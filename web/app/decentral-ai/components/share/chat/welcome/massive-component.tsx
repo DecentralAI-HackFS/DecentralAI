@@ -108,11 +108,11 @@ export const EditBtn = ({
 export const FootLogo = () => (
   <div className="flex items-center">
     <img
-      src="https://flowbite.com/docs/images/logo.svg"
-      className="h-5 mr-2"
+      src="/images/common/logo.png"
+      className="h-6 mr-2 object-contain"
       alt="DecentralAI Logo"
     />
-    <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
       DecentralAI
     </span>
   </div>
