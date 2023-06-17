@@ -33,7 +33,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/apps',
+        destination: '/decentral-ai/apps',
         permanent: false,
       },
     ]
